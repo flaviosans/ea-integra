@@ -6,14 +6,14 @@
  * @param {string} method 
  */
 
-const request = (data, action, method) => {
+const request = (action, method, successcallback, failcallback, data = null) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
-        if (request.status === 201) {
-            // Mensagem de sucesso
+        if (request.status === 200 || request.status === 201) {
+            successcallback(request.responseText);
         } else {
             if(request.readyState === request.DONE){
-            // Backup, e mensagem de sucesso também!
+              failcallback(request.responseText);
             }
         }
     }
@@ -21,6 +21,18 @@ const request = (data, action, method) => {
     request.open(method, action, true);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify(data));
+}
+
+
+
+const findCep = (element) => {
+  cep = element.inputmask.unmaskedvalue();
+  if(cep.length === 8){
+    console.log("rotina de cep completo "+cep);
+    request(`https://viacep.com.br/ws/${cep}/json/`, 'get');
+  } else if(cep.length === 5){
+    console.log("rotina de cep geral "+cep);
+  }
 }
 
 /**
@@ -51,19 +63,16 @@ const formToJSON = elements => [].reduce.call(elements, (data, element) => {
 const handleFormSubmit = (event, form) => {
     event.preventDefault();
     const data = formToJSON(form.elements);
-    const dataContainer = document.getElementsByClassName('content')[0];
-    
     normalize(data);
-
-    console.log(data);
-    dataContainer.textContent = JSON.stringify(data, null, "  ");
-    request(data, form.action, 'post');
+    request( form.action, 'post', data);
 };
+
 /**
  * Coloca os campos com o aninhamento correto, e num formato que a API aceite
  * @param {JSON} data 
  */
 const normalize = (data) => {
+    data.userApp.phone = data.userApp.phone.replace("")
     data.meta.userApp = data.userApp;
     data.meta.questions = data.questions;
     data.meta.city = data.city;
