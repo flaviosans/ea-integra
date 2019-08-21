@@ -17,7 +17,7 @@
 <body>
     <form action="http://localhost:8080/budget" method="POST" onsubmit="handleFormSubmit(event, this)">
         <input type="hidden" name="meta.refererId" value="xxxxxxxxxxxx">
-        CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
+        CEP: <input type="text" name="zipCode" class="ea-masked-zipcode" onblur="findCep(this)" onkeyup="findCep(this)"><br>
         Cidade: <input type="text" name="city"><br>
         Estado: <input type="text" name="state"><br>
         IBGE: <input type="text" name="city.ibge"><br>

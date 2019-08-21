@@ -1,7 +1,7 @@
 // Mascaras
 let zipcodemask = new Inputmask("99999-999");
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
-  zipcodemask.mask(m);  
+  zipcodemask.mask(m);
 });
 
 let phonemask = new Inputmask(['(99) 99999-9999', '(99) 9999-9999']);
