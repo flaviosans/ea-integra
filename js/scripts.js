@@ -1,6 +1,6 @@
 
 /**
- * Envia requisição para o servidor
+ * Envia requisição HTTP para o servidor
  * @param {string} data 
  * @param {string} action 
  * @param {string} method 
@@ -24,7 +24,7 @@ const request = (data, action, method) => {
 }
 
 /**
- * Retrieves input data from a form and returns it as a JSON object.
+ * Captura os dados do formulário em HTML e retorna-os em JSON
  * @param  {HTMLFormControlsCollection} elements  the form elements
  * @return {Object}                               form data as an object literal
  */
@@ -53,15 +53,21 @@ const handleFormSubmit = (event, form) => {
     const data = formToJSON(form.elements);
     const dataContainer = document.getElementsByClassName('content')[0];
     
-    // Organiza o JSON
-    data.meta.userApp = data.userApp;
-    data.meta.questions = data.questions;
-    data.meta.city = data.city;
+    normalize(data);
 
     console.log(data);
     dataContainer.textContent = JSON.stringify(data, null, "  ");
     request(data, form.action, 'post');
 };
+/**
+ * Coloca os campos com o aninhamento correto, e num formato que a API aceite
+ * @param {JSON} data 
+ */
+const normalize = (data) => {
+    data.meta.userApp = data.userApp;
+    data.meta.questions = data.questions;
+    data.meta.city = data.city;
+}
 
 /**
  * Checa se o elemento não está vazio
