@@ -15,14 +15,15 @@
 
 </script>
 <body>
-    <form action="http://localhost:8080/users_app" method="POST" onsubmit="handleFormSubmit(event, this)">
-        CEP: <input type="text" name="zipCode"><br>
+    <form action="http://localhost:8080/budget" method="POST" onsubmit="handleFormSubmit(event, this)">
+        <input type="hidden" name="meta.refererId" value="xxxxxxxxxxxx">
+        CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
         Cidade: <input type="text" name="city"><br>
         Estado: <input type="text" name="state"><br>
-        IBGE: <input type="text" name="ibge"><br>
+        IBGE: <input type="text" name="city.ibge"><br>
         Nome: <input type="text" name="userApp.name"/><br>
-        E-mail: <input type="text" name="userApp.email"/><br>
-        Telefone: <input type="text" name="userApp.phone" class="eaintegra-phone"><br>
+        E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
+        Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
         Categoria:<br>
         <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
         <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
@@ -70,6 +71,8 @@
     <p class="content">
 
     </p>
+  <script src="js/inputmask.js"></script>
+  <script src="js/masklisteners.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 </html>
