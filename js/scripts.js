@@ -5,34 +5,45 @@
  * @param {string} action 
  * @param {string} method 
  */
-
-const request = (action, method, successcallback, failcallback, data = null) => {
+const request = (action, method, callback, data = null) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
-        if (request.status === 200 || request.status === 201) {
-            successcallback(request.responseText);
+        if (request.readyState === request.DONE) {
+          callback(JSON.parse(request.responseText));
         } else {
-            if(request.readyState === request.DONE){
-              failcallback(request.responseText);
-            }
+          console.log(`State: ${request.readyState}, status: ${request.status}`);
         }
     }
-
+    
     request.open(method, action, true);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify(data));
 }
-
-
-
+/**
+ * 
+ * @param {HTMLElement} element 
+ */
 const findCep = (element) => {
   cep = element.inputmask.unmaskedvalue();
   if(cep.length === 8){
-    console.log("rotina de cep completo "+cep);
-    request(`https://viacep.com.br/ws/${cep}/json/`, 'get');
+    request(`https://viacep.com.br/ws/${cep}/json/`, 'get', function(data){
+      setCityFields(data);
+    });
   } else if(cep.length === 5){
-    console.log("rotina de cep geral "+cep);
+    request(`https://viacep.com.br/ws/${cep}000/json/`, 'get', function(data){
+      setCityFields(data);
+    });
   }
+}
+/**
+ * Seta os campos relacionados à cidade
+ * @param {JSON} data 
+ */
+const setCityFields = (data) => {
+  document.getElementsByName('zipCode').value = data.cep || document.getElementsByName('zipCode')[0].value;
+  document.getElementsByName('city')[0].value = data.localidade || document.getElementsByName('city')[0].value;
+  document.getElementsByName('state')[0].value = data.uf || document.getElementsByName('state')[0].value;
+  document.getElementsByName('city.ibge')[0].value = data.ibge || document.getElementsByName('city.ibge')[0].value;
 }
 
 /**
@@ -86,7 +97,10 @@ const normalize = (data) => {
 const isValidElement = element => {
     return element.name && element.value;
 };
-
+/**
+ * Verifica se é checkbox ou radiobutton, e se está marcado
+ * @param {HTMLElement} element 
+ */
 const isValidValue = element => {
     return (!['checkbox', 'radio'].includes(element.type) || element.checked);
 };
