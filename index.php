@@ -1,3 +1,8 @@
+<?php 
+  $unique_id = rand(0, 99999);
+  $referer_id = 1234567890;
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,21 +17,54 @@
 </head>
 
 <script>
+const showElementById = (elId) => {
+  document.getElementById(elId).style.display = 'inline';
+}
 
+const hideElementById = (elId) => {
+  document.getElementById(elId).style.display = 'none';
+}
+
+const showMoreCategories = () => {
+  showElementById('ea-div-more-categories<?php echo $unique_id ?>');
+  hideElementById('ea-button-more-categories<?php echo $unique_id ?>');
+}
+
+const showLessCategories = () => {
+  hideElementById('ea-div-more-categories<?php echo $unique_id ?>');
+  showElementById('ea-button-more-categories<?php echo $unique_id ?>');
+}
 </script>
+
 <body>
+    <style>
+    #ea-more-categories<?php echo $unique_id ?> {
+      display: none;
+    }
+    </style>
     <form action="http://localhost:8080/budget" method="POST" onsubmit="handleFormSubmit(event, this)">
+        <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
         <input type="hidden" name="meta.refererId" value="xxxxxxxxxxxx">
-        CEP: <input type="text" name="zipCode" class="ea-masked-zipcode" onblur="findCep(this)" onkeyup="findCep(this)"><br>
-        Cidade: <input type="text" name="city"><br>
-        Estado: <input type="text" name="state"><br>
-        IBGE: <input type="text" name="city.ibge"><br>
+        CEP: <input type="text" name="zipCode" id="zipcode<?php echo $unique_id ?>" class="ea-masked-zipcode" onblur="findCep(this)" onkeyup="findCep(this)"><br>
+        Cidade: <input type="text" name="city" id="city<?php echo $unique_id ?>"><br>
+        Estado: <input type="text" name="state" id="state<?php echo $unique_id ?>"><br>
+        IBGE: <input type="text" name="city.ibge" id="ibge<?php echo $unique_id ?>"><br>
         Nome: <input type="text" name="userApp.name"/><br>
         E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
         Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
         Categoria:<br>
         <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
         <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
+        <input type="radio" name="budgetCategory.id" value="3"> Terceira<br>
+        <button onclick="showMoreCategories()" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </button><br>
+        <div id="ea-div-more-categories<?php echo $unique_id ?>">
+          <input type="radio" name="budgetCategory.id" value="4"> Complementar<br>
+          <input type="radio" name="budgetCategory.id" value="5"> Outro complementar<br>
+          <input type="radio" name="budgetCategory.id" value="6"> Mais um complementar<br>
+          <input type="radio" name="budgetCategory.id" value="7"> Another<br>
+          <input type="radio" name="budgetCategory.id" value="8"> One more time<br>
+          <button id="ea-div-less-categories<?php echo $unique_id ?>" onclick="showLessCategories()">Menos</button><br>
+        </div>
         <input type="hidden" name="budgetSubCategory.id" value="79">
         Tipo de imóvel:<br>
         <input type="radio" name="questions.propertyType" value="residence"> Residencial<br>

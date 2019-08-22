@@ -14,11 +14,11 @@ const request = (action, method, callback, data = null) => {
           console.log(`State: ${request.readyState}, status: ${request.status}`);
         }
     }
-    
     request.open(method, action, true);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify(data));
 }
+
 /**
  * 
  * @param {HTMLElement} element 
@@ -26,24 +26,34 @@ const request = (action, method, callback, data = null) => {
 const findCep = (element) => {
   cep = element.inputmask.unmaskedvalue();
   if(cep.length === 8){
-    request(`https://viacep.com.br/ws/${cep}/json/`, 'get', function(data){
-      setCityFields(data);
-    });
-  } else if(cep.length === 5){
-    request(`https://viacep.com.br/ws/${cep}000/json/`, 'get', function(data){
-      setCityFields(data);
-    });
+    request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
   }
 }
+
+/**
+ * Manipula a resposta da requisição ao viacep. 
+ * Se o cep não existir, tenta o cep geral. Se existir, preenche o form.
+ * @param {JSON} data 
+ */
+const handleCepResponse = (data) => {
+  if(data.erro)
+    request(`https://viacep.com.br/ws/${cep.substring(0,5)}000/json`, 'get', setCityFields);
+  else
+    setCityFields(data);
+}
+
 /**
  * Seta os campos relacionados à cidade
  * @param {JSON} data 
  */
 const setCityFields = (data) => {
-  document.getElementsByName('zipCode').value = data.cep || document.getElementsByName('zipCode')[0].value;
-  document.getElementsByName('city')[0].value = data.localidade || document.getElementsByName('city')[0].value;
-  document.getElementsByName('state')[0].value = data.uf || document.getElementsByName('state')[0].value;
-  document.getElementsByName('city.ibge')[0].value = data.ibge || document.getElementsByName('city.ibge')[0].value;
+  if(data.erro === 'true'){
+    // Todo: rotina de cep inválido
+  } else {
+    document.getElementsByName('city')[0].value = data.localidade || document.getElementsByName('city')[0].value;
+    document.getElementsByName('state')[0].value = data.uf || document.getElementsByName('state')[0].value;
+    document.getElementsByName('city.ibge')[0].value = data.ibge || document.getElementsByName('city.ibge')[0].value;
+  }
 }
 
 /**
@@ -63,7 +73,6 @@ const formToJSON = elements => [].reduce.call(elements, (data, element) => {
   }
 
   return data;
-  
 }, {});
 
 /**
@@ -97,6 +106,7 @@ const normalize = (data) => {
 const isValidElement = element => {
     return element.name && element.value;
 };
+
 /**
  * Verifica se é checkbox ou radiobutton, e se está marcado
  * @param {HTMLElement} element 

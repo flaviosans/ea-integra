@@ -26,3 +26,4 @@ let emailmask = new Inputmask({
 Array.from(document.getElementsByClassName('ea-masked-email')).forEach(e => {
   emailmask.mask(e);
 })
+
