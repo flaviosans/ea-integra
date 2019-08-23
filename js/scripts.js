@@ -21,13 +21,16 @@ const request = (action, method, callback, data = null) => {
 
 /**
  * 
- * @param {HTMLElement} element 
+ * @param {string} cep
  */
-const findCep = (element) => {
-  cep = element.inputmask.unmaskedvalue();
-  if(cep.length === 8){
-    request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
-  }
+const findCep = (cep) => {
+    if(cep.length === 8){
+        request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
+    }
+    if(cep.length === 9){
+        request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
+    }
+    // return false;
 }
 
 /**
@@ -63,6 +66,7 @@ const setCityFields = (data) => {
  */
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
   if(isValidElement(element) && isValidValue(element)) {
+
     let keys = element.name.split(".");
     if ( keys.length == 1 ){
         data[keys[0]] = element.value;
@@ -83,8 +87,8 @@ const formToJSON = elements => [].reduce.call(elements, (data, element) => {
 const handleFormSubmit = (event, form) => {
     event.preventDefault();
     const data = formToJSON(form.elements);
-    normalize(data);
-    request( form.action, 'post', data);
+    const normalized = normalize(data);
+    request( form.action, 'post', showThanks, normalized);
 };
 
 /**
@@ -92,10 +96,10 @@ const handleFormSubmit = (event, form) => {
  * @param {JSON} data 
  */
 const normalize = (data) => {
-    data.userApp.phone = data.userApp.phone.replace("")
     data.meta.userApp = data.userApp;
     data.meta.questions = data.questions;
     data.meta.city = data.city;
+    return data;
 }
 
 /**
@@ -114,3 +118,7 @@ const isValidElement = element => {
 const isValidValue = element => {
     return (!['checkbox', 'radio'].includes(element.type) || element.checked);
 };
+
+const showThanks = () => {
+    console.log("thanks!");
+}
