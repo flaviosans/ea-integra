@@ -28,7 +28,7 @@
             Nome: <input type="text" name="userApp.name"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
-            <a onclick="checkForm('ea-form<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            <a><?php echo $next_message ?></a>
         </div>
         <div class="step<?php echo $unique_id ?>">
             Categoria:<br>
@@ -98,7 +98,7 @@
             <input type="radio" name="estimatedPrice" value="4">
             R$ 80 mil<br>
         </div>
-        <input type="submit"><br>
+        <input id="sss" type="submit"><br>
     </form>
   <script src="js/inputmask.js"></script>
   <script src="js/scripts.js"></script>

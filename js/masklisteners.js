@@ -1,24 +1,17 @@
 // Máscara de CEP
 let zipcodemask = new Inputmask("99999-999", {
-  "oncomplete": function () {
-    console.log("completou");
-  }, "onincomplete": function () {
-    console.log("ainda não completou");
+    nullable: false,
+    placeholder: "",
+  "oncomplete": function (e) {
+        const cep = e.target.inputmask.unmaskedvalue();
+        findCep(cep);
+      unlockStep();
+  }, "onincomplete": function (e) {
+        setCityFields({});
+        console.log("sem condições mano");
+        lockStep();
   }, "oncleared": function () {
-    console.log("limpou o campo");
-  }, "onkeyvalidation": function (key, res) {
-    console.log(`chave: ${key}, valor: ${res}`);
-  }, postValidation: function (buffer, pos, currentResult, opts) {
-    let isValid = true;
-    let reduced = buffer.reduce(function (acc, current) {
-      return acc + current;
-    });
-    if(pos === 8){
-      reduced = reduced.replace("-","");
-      isValid = findCep(reduced);
-    } else if(pos === 7 &&)
-    console.log(`post-val: ${reduced}`);
-    return isValid;
+        setCityFields({});
   }});
 
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
@@ -35,6 +28,7 @@ Array.from(document.getElementsByClassName('ea-masked-phone')).forEach(p => {
 let emailmask = new Inputmask({
   mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]",
   greedy: false,
+    nullable: false,
   onBeforePaste: function (pastedValue, opts) {
     pastedValue = pastedValue.toLowerCase();
     return pastedValue.replace("mailto:", "");
@@ -60,3 +54,12 @@ const checkForm = (formId) => {
     // Validações de máscara
   });
 }
+
+// Máscara (whatafoque) de título
+
+let textmask = new Inputmask({mask: "", nullable: true, onincomplete: function () {
+        console.log("uauauaua");
+    }});
+Array.from(document.getElementsByName('title')).forEach(t =>{
+    textmask.mask(t);
+})

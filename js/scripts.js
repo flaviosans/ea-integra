@@ -9,7 +9,7 @@ const request = (action, method, callback, data = null) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === request.DONE) {
-          callback(JSON.parse(request.responseText));
+           return callback(JSON.parse(request.responseText));
         } else {
           console.log(`State: ${request.readyState}, status: ${request.status}`);
         }
@@ -25,10 +25,7 @@ const request = (action, method, callback, data = null) => {
  */
 const findCep = (cep) => {
     if(cep.length === 8){
-        request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
-    }
-    if(cep.length === 9){
-        request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
+        return request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
     }
     // return false;
 }
@@ -39,9 +36,6 @@ const findCep = (cep) => {
  * @param {JSON} data 
  */
 const handleCepResponse = (data) => {
-  if(data.erro)
-    request(`https://viacep.com.br/ws/${cep.substring(0,5)}000/json`, 'get', setCityFields);
-  else
     setCityFields(data);
 }
 
@@ -51,11 +45,11 @@ const handleCepResponse = (data) => {
  */
 const setCityFields = (data) => {
   if(data.erro === 'true'){
-    // Todo: rotina de cep inválido
+
   } else {
-    document.getElementsByName('city')[0].value = data.localidade || document.getElementsByName('city')[0].value;
-    document.getElementsByName('state')[0].value = data.uf || document.getElementsByName('state')[0].value;
-    document.getElementsByName('city.ibge')[0].value = data.ibge || document.getElementsByName('city.ibge')[0].value;
+    document.getElementsByName('city')[0].value = data.localidade || '';
+    document.getElementsByName('state')[0].value = data.uf || '';
+    document.getElementsByName('city.ibge')[0].value = data.ibge || '';
   }
 }
 
