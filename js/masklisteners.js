@@ -5,14 +5,15 @@ let zipcodemask = new Inputmask("99999-999", {
   "oncomplete": function (e) {
         const cep = e.target.inputmask.unmaskedvalue();
         findCep(cep);
-      unlockStep();
+        // unlockStep();
   }, "onincomplete": function (e) {
         setCityFields({});
         console.log("sem condições mano");
-        lockStep();
+        lockStep(1);
   }, "oncleared": function () {
         setCityFields({});
   }});
+
 
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
   zipcodemask.mask(m);

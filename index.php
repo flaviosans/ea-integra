@@ -1,5 +1,5 @@
 <?php 
-  $unique_id = rand(0, 99999);
+  $unique_id = 555;
   $referer_id = 1234567890;
   $next_message = "Próximo";
   $previous_message = "Anterior";
@@ -18,7 +18,7 @@
 
 <body>
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-        <div class="step<?php echo $unique_id ?>">
+        <div class="step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             <input type="hidden" name="meta.refererId" value="xxxxxxxxxxxx">
             CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
@@ -28,7 +28,7 @@
             Nome: <input type="text" name="userApp.name"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
-            <a><?php echo $next_message ?></a>
+            <a onclick="validateStep('step1<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="step<?php echo $unique_id ?>">
             Categoria:<br>

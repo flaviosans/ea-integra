@@ -116,3 +116,18 @@ const isValidValue = element => {
 const showThanks = () => {
     console.log("thanks!");
 }
+
+const validateStep = (stepId) => {
+    let div = document.getElementById(stepId);
+    for(let i = 0; i < div.childNodes.length; i++){
+        if (isValidElement(div.childNodes[i]) && isValidValue(div.childNodes[i])) {
+            console.log(`elemento ${div.childNodes[i].name} válido`);
+        } else {
+            console.log(`!!! elemento ${div.childNodes[i].name} inválido`);
+        }
+    }
+}
+
+const lockStep = (stepNumber) => {
+
+}
