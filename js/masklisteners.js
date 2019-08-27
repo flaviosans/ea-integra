@@ -9,7 +9,6 @@ let zipcodemask = new Inputmask("99999-999", {
   }, "onincomplete": function (e) {
         setCityFields({});
         console.log("sem condições mano");
-        lockStep(1);
   }, "oncleared": function () {
         setCityFields({});
   }});
@@ -20,7 +19,7 @@ Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
 });
 
 // Máscara de telefone
-let phonemask = new Inputmask({ mask: ['(99) 9999-9999', '(99) 99999-9999'], keepStatic: true, autoUnmask: true});
+let phonemask = new Inputmask({ mask: ['(99) 9999-9999', '(99) \\99999-9999'], keepStatic: true, autoUnmask: true, escapeChar: '\\'});
 Array.from(document.getElementsByClassName('ea-masked-phone')).forEach(p => {
   phonemask.mask(p);
 });
@@ -59,8 +58,9 @@ const checkForm = (formId) => {
 // Máscara (whatafoque) de título
 
 let textmask = new Inputmask({mask: "", nullable: true, onincomplete: function () {
-        console.log("uauauaua");
-    }});
+    console.log("uauauaua");
+}});
+
 Array.from(document.getElementsByName('title')).forEach(t =>{
     textmask.mask(t);
 })

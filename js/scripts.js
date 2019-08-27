@@ -59,7 +59,7 @@ const setCityFields = (data) => {
  * @return {Object}                               form data as an object literal
  */
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-  if(isValidElement(element) && isValidValue(element)) {
+  if(isFormField(element) && isChecked(element)) {
 
     let keys = element.name.split(".");
     if ( keys.length == 1 ){
@@ -98,36 +98,51 @@ const normalize = (data) => {
 
 /**
  * Checa se o elemento não está vazio
- * @param  {Element} element  
+ * @param  {Element} element
  * @return {Bool}
  */
-const isValidElement = element => {
-    return element.name && element.value;
+const isFormField = element => {
+    return element.name && (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA');
 };
 
 /**
  * Verifica se é checkbox ou radiobutton, e se está marcado
  * @param {HTMLElement} element 
  */
-const isValidValue = element => {
+const isChecked = element => {
     return (!['checkbox', 'radio'].includes(element.type) || element.checked);
 };
+
+const isEmptyValue = element => {
+    if (element.inputmask) {
+        return !element.inputmask.isComplete();
+    } else {
+        return element.value === "";
+    }
+}
 
 const showThanks = () => {
     console.log("thanks!");
 }
 
 const validateStep = (stepId) => {
-    let div = document.getElementById(stepId);
+    // let div = document.getElementById(stepId);
+    let div = stepId.parentNode;
+    let options = [];
     for(let i = 0; i < div.childNodes.length; i++){
-        if (isValidElement(div.childNodes[i]) && isValidValue(div.childNodes[i])) {
-            console.log(`elemento ${div.childNodes[i].name} válido`);
-        } else {
+        // Não é um campo? Próximo laço
+        if (!isFormField(div.childNodes[i]))
+            continue;
+        if(isChecked(div.childNodes[i]) && ['checkbox', 'radio'].includes(div.childNodes[i].type))
+            options[div.childNodes[i].name] = div.childNodes[i];
+        // Input vazio? Inválido
+        if(isEmptyValue(div.childNodes[i]))
             console.log(`!!! elemento ${div.childNodes[i].name} inválido`);
-        }
+        else
+            console.log(`elemento ${div.childNodes[i].name} válido`);
     }
-}
 
-const lockStep = (stepNumber) => {
-
+    options.forEach(u => {
+        console.log(u.name);
+    })
 }
