@@ -20,7 +20,6 @@
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
         <div class="step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
-            <input type="hidden" name="meta.refererId" value="xxxxxxxxxxxx">
             CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
             Cidade: <input type="text" name="city" id="city<?php echo $unique_id ?>"><br>
             Estado: <input type="text" name="state" id="state<?php echo $unique_id ?>"><br>
@@ -28,7 +27,6 @@
             Nome: <input type="text" name="userApp.name"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
-<!--            <a onclick="validateStep('step1--><?php //echo $unique_id ?>//')"><?php //echo $next_message ?><!--</a>-->
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
         <div class="step<?php echo $unique_id ?>">
@@ -46,7 +44,6 @@
                 <button id="ea-div-less-categories<?php echo $unique_id ?>" onclick="showLessCategories()">Menos</button><br>
             </div>
             <input type="hidden" name="budgetSubCategory.id" value="79">
-<!--            <a onclick="validateStep('step2--><?php //echo $unique_id ?>//')"><?php //echo $next_message ?><!--</a>-->
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
         <div class="step<?php echo $unique_id ?>">
@@ -83,7 +80,7 @@
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
         <div class="step<?php echo $unique_id ?>">
-            Interesse:<br>
+            <br>Interesse:<br>
             <input type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
             Saber apenas preços a fim de comparação<br>
             <input type="radio" name="meta.interest" value="tirar_duvidas_para_saber_melhor_o_que_desejo_fazer">

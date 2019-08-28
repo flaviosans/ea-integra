@@ -36,7 +36,10 @@ const findCep = (cep) => {
  * @param {JSON} data 
  */
 const handleCepResponse = (data) => {
-    setCityFields(data);
+    if(data.erro === true)
+        console.log("deu erro.");
+    else
+        setCityFields(data);
 }
 
 /**
@@ -44,12 +47,19 @@ const handleCepResponse = (data) => {
  * @param {JSON} data 
  */
 const setCityFields = (data) => {
-  if(data.erro === 'true'){
+  if(data.erro === true){
 
   } else {
-    document.getElementsByName('city')[0].value = data.localidade || '';
-    document.getElementsByName('state')[0].value = data.uf || '';
-    document.getElementsByName('city.ibge')[0].value = data.ibge || '';
+
+    Array.from(document.getElementsByName('city')).forEach(v =>{
+        v.value = data.localidade || '';
+    });
+    Array.from(document.getElementsByName('state')).forEach(v =>{
+        v.value = data.uf || '';
+    });
+    Array.from(document.getElementsByName('city.ibge')).forEach(v =>{
+        v.value = data.ibge || '';
+    });
   }
 }
 
@@ -59,8 +69,8 @@ const setCityFields = (data) => {
  * @return {Object}                               form data as an object literal
  */
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+    //TODO: Recursão para não haver limite de profundidade
   if(isFormField(element) && isChecked(element)) {
-
     let keys = element.name.split(".");
     if ( keys.length == 1 ){
         data[keys[0]] = element.value;
@@ -81,8 +91,9 @@ const formToJSON = elements => [].reduce.call(elements, (data, element) => {
 const handleFormSubmit = (event, form) => {
     event.preventDefault();
     const data = formToJSON(form.elements);
-    const normalized = normalize(data);
-    request( form.action, 'post', showThanks, normalized);
+    const normalizedData = normalize(data);
+    //TODO: Mostrar um loader até a requisição voltar
+    request( form.action, 'post', showThanks, normalizedData);
 };
 
 /**
@@ -99,20 +110,33 @@ const normalize = (data) => {
 /**
  * Checa se o elemento não está vazio
  * @param  {Element} element
- * @return {Bool}
+ * @return {boolean}
  */
 const isFormField = element => {
-    return element.name && (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA');
+    return !!element && element.name && ['TEXTAREA', 'INPUT'].includes(element.nodeName);
 };
 
 /**
- * Verifica se é checkbox ou radiobutton, e se está marcado
+ * Verifica se o elemento é checkable, e se está marcado
  * @param {HTMLElement} element 
  */
 const isChecked = element => {
-    return (!['checkbox', 'radio'].includes(element.type) || element.checked);
+    return (isCheckableField() || element.checked);
 };
+/**
+ * Verifica se é checkbox ou radiobutton
+ * @param element
+ * @returns {boolean}
+ */
+const isCheckableField = element => {
+    return !!element && ['checkbox', 'radio'].includes(element.type);
+}
 
+/**
+ * Verifica se o elemento de texto está vazio
+ * @param element
+ * @returns {boolean}
+ */
 const isEmptyValue = element => {
     if (element.inputmask) {
         return !element.inputmask.isComplete();
@@ -121,28 +145,58 @@ const isEmptyValue = element => {
     }
 }
 
+/**
+ * Exibe a tela de agradecimento ao leitor
+ */
 const showThanks = () => {
+    //TODO: rotina de "obrigado por preencher" vem aqui
     console.log("thanks!");
 }
 
-const validateStep = (stepId) => {
-    // let div = document.getElementById(stepId);
-    let div = stepId.parentNode;
-    let options = [];
-    for(let i = 0; i < div.childNodes.length; i++){
-        // Não é um campo? Próximo laço
-        if (!isFormField(div.childNodes[i]))
-            continue;
-        if(isChecked(div.childNodes[i]) && ['checkbox', 'radio'].includes(div.childNodes[i].type))
-            options[div.childNodes[i].name] = div.childNodes[i];
-        // Input vazio? Inválido
-        if(isEmptyValue(div.childNodes[i]))
-            console.log(`!!! elemento ${div.childNodes[i].name} inválido`);
-        else
-            console.log(`elemento ${div.childNodes[i].name} válido`);
+/** Verifica se é um campo do tipo 'text'
+ *
+ * @param element
+ * @returns {boolean}
+ */
+const isTextField = element => {
+    return element.type === 'text' || element.nodeName === 'TEXTAREA';
+}
+
+/** Verifica se todos os campos do step recebido estão preenchidos.
+ *
+ * @param element
+ */
+const validateStep = element => {
+    // let inicio = performance.now();
+    let step = element.parentNode, nodes = step.childNodes;
+    let checkables = [], invalids = [];
+
+    for (let i = 0; i <= nodes.length; i++) {
+        if(isFormField(nodes[i])){
+            if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
+                    invalids.push(nodes[i].name);
+            } else if (isCheckableField(nodes[i])) {
+                checkables[nodes[i].name] = checkables[nodes[i].name] || [];
+                checkables[nodes[i].name].push(nodes[i]);
+            }
+        }
     }
 
-    options.forEach(u => {
-        console.log(u.name);
-    })
+    for (let i in checkables) {
+        let valid = checkables[i].filter(isChecked);
+        if (valid.length === 0)
+            invalids.push(checkables[i][0].name);
+    }
+
+    if(invalids.length === 0)
+        console.log(`Parabéns, você não é muito burro, passou o step ${step.id}`);
+    else
+        invalids.forEach(lockStep);
+    // let fim = performance.now();
+    console.log("ponto");
+    // alert(`Tempo de performance: ${fim - inicio.toFixed(4)} Milissegundos:`);
+}
+
+const lockStep = element => {
+    console.log(`!!! Campo vazio ou unchecked em ${element}. não passou o step`);
 }
