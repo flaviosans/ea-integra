@@ -1,3 +1,22 @@
+const steps = [];
+
+const stepForm = classes => {
+  this.position = 0;
+  this.classes = classes;
+  this.walk = () => {
+    // Todo: rotina de passo à frente ou artrás
+  }
+};
+
+window.addEventListener('load', e => {
+  let allSteps = document.getElementsByClassName('ea-step');
+  Array.from(allSteps).forEach(s => {
+    let secondClass = s.classList[1];
+    steps[secondClass] = steps[secondClass] || [];
+    steps[secondClass].push(s);
+  });
+});
+
 // Máscara de CEP
 let zipcodemask = new Inputmask("99999-999", {
     nullable: false,

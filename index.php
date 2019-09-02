@@ -1,5 +1,5 @@
 <?php 
-  $unique_id = 555;
+  $unique_id = 'i555';
   $referer_id = 1234567890;
   $next_message = "Próximo";
   $previous_message = "Anterior";
@@ -17,8 +17,12 @@
 </head>
 
 <body>
+    <script>
+        // initSteps('<?php echo $unique_id ?>');
+        //  let steps<?php echo $unique_id ?> = document.getElementsByClassName('step<?php echo $unique_id ?>');   
+    </script>
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-        <div class="step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
             Cidade: <input type="text" name="city" id="city<?php echo $unique_id ?>"><br>
@@ -29,7 +33,7 @@
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             Categoria:<br>
             <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
             <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
@@ -46,7 +50,7 @@
             <input type="hidden" name="budgetSubCategory.id" value="79">
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             Tipo de imóvel:<br>
             <input type="radio" name="questions.propertyType" value="residence"> Residencial<br>
             <input type="radio" name="questions.propertyType" value="trade"> Comercial<br>
@@ -54,7 +58,7 @@
             <input type="radio" name="questions.propertyType" value="other"> Outro<br>
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             Quando pretende começar:<br>
             <input type="radio" name="questions.start" value="afap"> O mais rápido possível<br>
             <input type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses<br>
@@ -62,14 +66,14 @@
             <input type="radio" name="questions.start" value="dont_know"> Ainda não sei<br>
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             Título: (Tirar esse campo?)<br>
             <input type="text" name="title"/><br>
             Descrição: (melhorar esse nome)<br>
             <textarea name="description"></textarea><br>
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             Melhor horário para contato:<br>
             <input type="radio" name="questions.contact_hour" value="morning"> Manhã<br>
             <input type="radio" name="questions.contact_hour" value="afternoon"> Tarde<br>
@@ -79,7 +83,7 @@
             <input type="radio" name="questions.person_type" value="pj"> Pessoa Jurídica<br>
             <a onclick="validateStep(this)"><?php echo $next_message ?></a>
         </div>
-        <div class="step<?php echo $unique_id ?>">
+        <div class="ea-step step<?php echo $unique_id ?>">
             <br>Interesse:<br>
             <input type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
             Saber apenas preços a fim de comparação<br>
@@ -101,7 +105,7 @@
         <input id="sss" type="submit"><br>
     </form>
   <script src="js/inputmask.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="js/masklisteners.js"></script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 /**
  * Envia requisição HTTP para o servidor
  * @param {string} data 
@@ -27,7 +26,6 @@ const findCep = (cep) => {
     if(cep.length === 8){
         return request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
     }
-    // return false;
 }
 
 /**
@@ -48,9 +46,8 @@ const handleCepResponse = (data) => {
  */
 const setCityFields = (data) => {
   if(data.erro === true){
-
+    // Todo: tratar erro de cep vindo da api VIACEP
   } else {
-
     Array.from(document.getElementsByName('city')).forEach(v =>{
         v.value = data.localidade || '';
     });
@@ -69,8 +66,8 @@ const setCityFields = (data) => {
  * @return {Object}                               form data as an object literal
  */
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-    //TODO: Recursão para não haver limite de profundidade
-  if(isFormField(element) && isChecked(element)) {
+  //TODO: Recursão para não haver limite de profundidade
+  if(isFormField(element) || isChecked(element)) {
     let keys = element.name.split(".");
     if ( keys.length == 1 ){
         data[keys[0]] = element.value;
@@ -124,7 +121,7 @@ const isChecked = element => {
     return (isCheckableField() || element.checked);
 };
 /**
- * Verifica se é checkbox ou radiobutton
+ * Verifica se é um elemento checável (duh), seja checkbox ou radiobutton
  * @param element
  * @returns {boolean}
  */
@@ -167,7 +164,8 @@ const isTextField = element => {
  * @param element
  */
 const validateStep = element => {
-    // let inicio = performance.now();
+    let inicio = performance.now();
+    
     let step = element.parentNode, nodes = step.childNodes;
     let checkables = [], invalids = [];
 
@@ -189,12 +187,11 @@ const validateStep = element => {
     }
 
     if(invalids.length === 0)
-        console.log(`Parabéns, você não é muito burro, passou o step ${step.id}`);
+        console.log(`Parabéns, você não é muito burro, passou o step ${step.classList[1]}`);
     else
         invalids.forEach(lockStep);
-    // let fim = performance.now();
-    console.log("ponto");
-    // alert(`Tempo de performance: ${fim - inicio.toFixed(4)} Milissegundos:`);
+    let fim = performance.now();
+    console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} Milissegundos:`);
 }
 
 const lockStep = element => {
