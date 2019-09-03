@@ -165,7 +165,6 @@ const isTextField = element => {
  */
 const validateStep = element => {
     let inicio = performance.now();
-    
     let step = element.parentNode, nodes = step.childNodes;
     let checkables = [], invalids = [];
 
@@ -187,7 +186,7 @@ const validateStep = element => {
     }
 
     if(invalids.length === 0)
-        console.log(`Parabéns, você não é muito burro, passou o step ${step.classList[1]}`);
+        walkStep(step.classList[1]);
     else
         invalids.forEach(lockStep);
     let fim = performance.now();
@@ -196,4 +195,9 @@ const validateStep = element => {
 
 const lockStep = element => {
     console.log(`!!! Campo vazio ou unchecked em ${element}. não passou o step`);
+}
+
+const walkStep = className => {
+    stepObjects[className].showNext();
+    console.log(`Parabéns, você não é muito burro, passou o step ${className}`);
 }

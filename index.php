@@ -1,5 +1,5 @@
 <?php 
-  $unique_id = 'i555';
+  $unique_id = rand(100, 999);
   $referer_id = 1234567890;
   $next_message = "Próximo";
   $previous_message = "Anterior";
@@ -17,10 +17,6 @@
 </head>
 
 <body>
-    <script>
-        // initSteps('<?php echo $unique_id ?>');
-        //  let steps<?php echo $unique_id ?> = document.getElementsByClassName('step<?php echo $unique_id ?>');   
-    </script>
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
         <div class="ea-step step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
