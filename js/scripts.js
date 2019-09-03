@@ -48,6 +48,9 @@ const setCityFields = (data) => {
   if(data.erro === true){
     // Todo: tratar erro de cep vindo da api VIACEP
   } else {
+    Array.from(document.getElementsByName('zipCode')).forEach(z =>{
+        z.value = data.cep || '';
+    });
     Array.from(document.getElementsByName('city')).forEach(v =>{
         v.value = data.localidade || '';
     });
@@ -161,43 +164,16 @@ const isTextField = element => {
 
 /** Verifica se todos os campos do step recebido estão preenchidos.
  *
- * @param element
+ * @param className
  */
-const validateStep = element => {
-    let inicio = performance.now();
-    let step = element.parentNode, nodes = step.childNodes;
-    let checkables = [], invalids = [];
 
-    for (let i = 0; i <= nodes.length; i++) {
-        if(isFormField(nodes[i])){
-            if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
-                    invalids.push(nodes[i].name);
-            } else if (isCheckableField(nodes[i])) {
-                checkables[nodes[i].name] = checkables[nodes[i].name] || [];
-                checkables[nodes[i].name].push(nodes[i]);
-            }
-        }
-    }
+ const validateStep = className => {
+    stepObjects[className].validateStep();
+ }
 
-    for (let i in checkables) {
-        let valid = checkables[i].filter(isChecked);
-        if (valid.length === 0)
-            invalids.push(checkables[i][0].name);
-    }
-
-    if(invalids.length === 0)
-        walkStep(step.classList[1]);
-    else
-        invalids.forEach(lockStep);
-    let fim = performance.now();
-    console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} Milissegundos:`);
-}
-
+ const prev = className => {
+    stepObjects[className].showPrev();
+ }
 const lockStep = element => {
     console.log(`!!! Campo vazio ou unchecked em ${element}. não passou o step`);
-}
-
-const walkStep = className => {
-    stepObjects[className].showNext();
-    console.log(`Parabéns, você não é muito burro, passou o step ${className}`);
 }

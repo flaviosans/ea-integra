@@ -1,5 +1,5 @@
-var EaForm = function(steps){
-  this.position = 0;
+let EaForm = function(steps){
+  this.index = 0;
   this.steps = Array.from(steps);
   this.init();
 };
@@ -11,18 +11,18 @@ EaForm.prototype.init = function() {
 }
 
 EaForm.prototype.hide = function() {
-  this.steps[this.position % this.steps.length].style.display = 'none';
+  this.steps[this.index % this.steps.length].style.display = 'none';
 }
 
 EaForm.prototype.showNext = function() {
   this.hide();
-  this.steps[++this.position % this.steps.length].style.display = 'block';
+  this.steps[++this.index % this.steps.length].style.display = 'block';
 }
 
 EaForm.prototype.validateStep = function() {
 
   let inicio = performance.now();
-  let step = this.steps[this.position], nodes = step.childNodes;
+  let step = this.steps[this.index], nodes = step.childNodes;
   let checkables = [], invalids = [];
 
   for (let i = 0; i <= nodes.length; i++) {
@@ -43,12 +43,13 @@ EaForm.prototype.validateStep = function() {
   }
 
   if(invalids.length === 0)
-      walkStep(step.classList[1]);
+      this.showNext();
   else
       invalids.forEach(lockStep);
   let fim = performance.now();
-  console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} Milissegundos:`);
+  console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} ms`);
 }
+
 const stepElements = [];
 const stepObjects = [];
 
@@ -72,10 +73,8 @@ let zipcodemask = new Inputmask("99999-999", {
   "oncomplete": function (e) {
         const cep = e.target.inputmask.unmaskedvalue();
         findCep(cep);
-        // unlockStep();
   }, "onincomplete": function (e) {
         setCityFields({});
-        console.log("sem condições mano");
   }, "oncleared": function () {
         setCityFields({});
   }});
@@ -121,13 +120,3 @@ const checkForm = (formId) => {
     // Validações de máscara
   });
 }
-
-// Máscara (whatafoque) de título
-
-let textmask = new Inputmask({mask: "", nullable: true, onincomplete: function () {
-    console.log("uauauaua");
-}});
-
-Array.from(document.getElementsByName('title')).forEach(t =>{
-    textmask.mask(t);
-})

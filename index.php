@@ -1,5 +1,5 @@
 <?php 
-  $unique_id = rand(100, 999);
+  $unique_id = 'n555';
   $referer_id = 1234567890;
   $next_message = "Próximo";
   $previous_message = "Anterior";
@@ -27,7 +27,7 @@
             Nome: <input type="text" name="userApp.name"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             Categoria:<br>
@@ -44,7 +44,7 @@
                 <button id="ea-div-less-categories<?php echo $unique_id ?>" onclick="showLessCategories()">Menos</button><br>
             </div>
             <input type="hidden" name="budgetSubCategory.id" value="79">
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             Tipo de imóvel:<br>
@@ -52,7 +52,7 @@
             <input type="radio" name="questions.propertyType" value="trade"> Comercial<br>
             <input type="radio" name="questions.propertyType" value="industry"> Industrial<br>
             <input type="radio" name="questions.propertyType" value="other"> Outro<br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             Quando pretende começar:<br>
@@ -60,14 +60,14 @@
             <input type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses<br>
             <input type="radio" name="questions.start" value="more_than_3_months"> Daqui a mais que 3 meses<br>
             <input type="radio" name="questions.start" value="dont_know"> Ainda não sei<br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             Título: (Tirar esse campo?)<br>
             <input type="text" name="title"/><br>
             Descrição: (melhorar esse nome)<br>
             <textarea name="description"></textarea><br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             Melhor horário para contato:<br>
@@ -77,7 +77,7 @@
             O pedido é para:<br>
             <input type="radio" name="questions.person_type" value="pf"> Pessoa Física<br>
             <input type="radio" name="questions.person_type" value="pj"> Pessoa Jurídica<br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
             <br>Interesse:<br>
@@ -96,9 +96,10 @@
             R$ 60 mil<br>
             <input type="radio" name="estimatedPrice" value="4">
             R$ 80 mil<br>
-            <a onclick="validateStep(this)"><?php echo $next_message ?></a>
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a>
+            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
-        <input id="sss" type="submit"><br>
+        <input type="submit"><br>
     </form>
   <script src="js/inputmask.js"></script>
   <script src="js/masklisteners.js"></script>
