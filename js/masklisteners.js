@@ -15,8 +15,20 @@ EaForm.prototype.hide = function() {
 }
 
 EaForm.prototype.showNext = function() {
-  this.hide();
-  this.steps[++this.index % this.steps.length].style.display = 'inline';
+    this.walk(1);
+}
+
+EaForm.prototype.showPrev = function() {
+    this.walk(-1);
+}
+
+EaForm.prototype.walk = function(step) {
+    this.hide();
+    if(this.index === this.steps.length)
+      this.index = 0;
+    if(this.index < 0 )
+      this.index = this.steps.length - 1;
+    this.steps[this.index].style.display = 'inline';
 }
 
 EaForm.prototype.validateStep = function() {
@@ -30,7 +42,7 @@ EaForm.prototype.validateStep = function() {
           if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
                   invalids.push(nodes[i]);
           } else if (isCheckableField(nodes[i])) {
-              checkables[nodes[i].name] = checkables[nodes[i]] || [];
+              checkables[nodes[i].name] = checkables[nodes[i].name] || [];
               checkables[nodes[i].name].push(nodes[i]);
           }
       }
@@ -58,7 +70,7 @@ const stepElements = [];
 const stepObjects = [];
 
 Array.from(document.getElementsByClassName('ea-field')).forEach(f =>{
-  f.addEventListener('focus', function(e){
+  f.addEventListener('change', function(e){
     e.target.style.background = '#ffffff';
   });
 })
