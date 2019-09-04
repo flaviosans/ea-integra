@@ -19,18 +19,19 @@
 <body>
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
         <div class="ea-step step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
+            <div class="ea-warning">Oi</div>
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
-            CEP: <input type="text" name="zipCode" class="ea-masked-zipcode"><br>
-            Cidade: <input type="text" name="city" id="city<?php echo $unique_id ?>"><br>
-            Estado: <input type="text" name="state" id="state<?php echo $unique_id ?>"><br>
-            IBGE: <input type="text" name="city.ibge" id="ibge<?php echo $unique_id ?>"><br>
-            Nome: <input type="text" name="userApp.name"/><br>
-            E-mail: <input type="text" name="userApp.email" class="ea-masked-email"/><br>
+            CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
+            Cidade: <input type="text" name="city" class="ea-field" id="city<?php echo $unique_id ?>"><br>
+            Estado: <input type="text" name="state" class="ea-field" id="state<?php echo $unique_id ?>"><br>
+            IBGE: <input type="text" name="city.ibge" class="ea-field" id="ibge<?php echo $unique_id ?>"><br>
+            Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
+            E-mail: <input type="text" name="userApp.email" class="ea-field ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
-            Categoria:<br>
+            <span ></span> Categoria:<br>
             <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
             <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
             <input type="radio" name="budgetCategory.id" value="3"> Terceira<br>

@@ -174,6 +174,6 @@ const isTextField = element => {
  const prev = className => {
     stepObjects[className].showPrev();
  }
-const lockStep = element => {
-    console.log(`!!! Campo vazio ou unchecked em ${element}. não passou o step`);
+const showErrors = (element) => {
+    element.style.background = '#c7c7c7';
 }

@@ -16,7 +16,7 @@ EaForm.prototype.hide = function() {
 
 EaForm.prototype.showNext = function() {
   this.hide();
-  this.steps[++this.index % this.steps.length].style.display = 'block';
+  this.steps[++this.index % this.steps.length].style.display = 'inline';
 }
 
 EaForm.prototype.validateStep = function() {
@@ -28,9 +28,9 @@ EaForm.prototype.validateStep = function() {
   for (let i = 0; i <= nodes.length; i++) {
       if(isFormField(nodes[i])){
           if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
-                  invalids.push(nodes[i].name);
+                  invalids.push(nodes[i]);
           } else if (isCheckableField(nodes[i])) {
-              checkables[nodes[i].name] = checkables[nodes[i].name] || [];
+              checkables[nodes[i].name] = checkables[nodes[i]] || [];
               checkables[nodes[i].name].push(nodes[i]);
           }
       }
@@ -39,19 +39,29 @@ EaForm.prototype.validateStep = function() {
   for (let i in checkables) {
       let valid = checkables[i].filter(isChecked);
       if (valid.length === 0)
-          invalids.push(checkables[i][0].name);
+          invalids.push(checkables[i][0]);
   }
 
   if(invalids.length === 0)
       this.showNext();
-  else
-      invalids.forEach(lockStep);
+  else{
+    // lockStep(step);
+    invalids.forEach(showErrors);
+    step.getElementsByClassName('ea-warning')[0].style.color = '#ff0000';
+  }
   let fim = performance.now();
+
   console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} ms`);
 }
 
 const stepElements = [];
 const stepObjects = [];
+
+Array.from(document.getElementsByClassName('ea-field')).forEach(f =>{
+  f.addEventListener('focus', function(e){
+    e.target.style.background = '#ffffff';
+  });
+})
 
 window.addEventListener('load', e => {
   let allSteps = document.getElementsByClassName('ea-step');
@@ -78,7 +88,6 @@ let zipcodemask = new Inputmask("99999-999", {
   }, "oncleared": function () {
         setCityFields({});
   }});
-
   
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
   zipcodemask.mask(m);
