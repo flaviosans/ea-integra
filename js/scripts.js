@@ -8,7 +8,7 @@ const request = (action, method, callback, data = null) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === request.DONE) {
-           return callback(JSON.parse(request.responseText));
+            return callback(request.responseURL,JSON.parse(request.responseText));
         } else {
           console.log(`State: ${request.readyState}, status: ${request.status}`);
         }
@@ -24,7 +24,7 @@ const request = (action, method, callback, data = null) => {
  */
 const findCep = (cep) => {
     if(cep.length === 8){
-        return request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
+        request(`https://viacep.com.br/ws/${cep}/json/`, 'get', handleCepResponse);
     }
 }
 
@@ -33,11 +33,13 @@ const findCep = (cep) => {
  * Se o cep não existir, tenta o cep geral. Se existir, preenche o form.
  * @param {JSON} data 
  */
-const handleCepResponse = (data) => {
-    if(data.erro === true)
-        console.log("deu erro.");
-    else
-        setCityFields(data);
+const handleCepResponse = (url, data) => {
+    if(data.erro === true){
+        console.log("cep não encontrado");
+        var cep = url.split("/")[4];
+        setCityFields({cep: cep});
+    }
+    else setCityFields(data);
 }
 
 /**
@@ -174,6 +176,3 @@ const isTextField = element => {
  const prev = className => {
     stepObjects[className].showPrev();
  }
-const showErrors = (element) => {
-    element.style.background = '#c7c7c7';
-}

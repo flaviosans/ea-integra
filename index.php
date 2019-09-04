@@ -18,20 +18,22 @@
 
 <body>
     <form action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-        <div class="ea-step step<?php echo $unique_id ?>" id="step1<?php echo $unique_id ?>">
-            <div class="ea-warning">Oi</div>
+        <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
+            <div>Preencha seu CEP:</div>
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
             Cidade: <input type="text" name="city" class="ea-field" id="city<?php echo $unique_id ?>"><br>
             Estado: <input type="text" name="state" class="ea-field" id="state<?php echo $unique_id ?>"><br>
-            IBGE: <input type="text" name="city.ibge" class="ea-field" id="ibge<?php echo $unique_id ?>"><br>
+            IBGE: <input type="text" name="city.ibge"  class="ea-field" id="ibge<?php echo $unique_id ?>" value="000000"><br>
             Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-field ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
-            <span ></span> Categoria:<br>
+            <div class="ea-warning">Confira os campos</div>
+            <div>Categoria:</div>
             <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
             <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
             <input type="radio" name="budgetCategory.id" value="3"> Terceira<br>
@@ -48,6 +50,7 @@
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
             Tipo de imóvel:<br>
             <input type="radio" name="questions.propertyType" value="residence"> Residencial<br>
             <input type="radio" name="questions.propertyType" value="trade"> Comercial<br>
@@ -56,6 +59,7 @@
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
             Quando pretende começar:<br>
             <input type="radio" name="questions.start" value="afap"> O mais rápido possível<br>
             <input type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses<br>
@@ -64,6 +68,7 @@
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
             Título: (Tirar esse campo?)<br>
             <input type="text" name="title"/><br>
             Descrição: (melhorar esse nome)<br>
@@ -71,6 +76,7 @@
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
             Melhor horário para contato:<br>
             <input type="radio" name="questions.contact_hour" value="morning"> Manhã<br>
             <input type="radio" name="questions.contact_hour" value="afternoon"> Tarde<br>
@@ -81,6 +87,7 @@
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-warning">Confira os campos</div>
             <br>Interesse:<br>
             <input type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
             Saber apenas preços a fim de comparação<br>
@@ -98,9 +105,8 @@
             <input type="radio" name="estimatedPrice" value="4">
             R$ 80 mil<br>
             <a onclick="prev('step<?php echo $unique_id ?>')">previous</a>
-            <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            <input type="submit"><br>
         </div>
-        <input type="submit"><br>
     </form>
   <script src="js/inputmask.js"></script>
   <script src="js/masklisteners.js"></script>

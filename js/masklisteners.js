@@ -1,5 +1,8 @@
+// Objeto EaForm
+
 let EaForm = function(steps){
   this.index = 0;
+  this.invalids = [];
   this.steps = Array.from(steps);
   this.init();
 };
@@ -24,6 +27,7 @@ EaForm.prototype.showPrev = function() {
 
 EaForm.prototype.walk = function(step) {
     this.hide();
+    this.index+=step;
     if(this.index === this.steps.length)
       this.index = 0;
     if(this.index < 0 )
@@ -31,49 +35,59 @@ EaForm.prototype.walk = function(step) {
     this.steps[this.index].style.display = 'inline';
 }
 
+EaForm.prototype.showErrors = function() {
+  this.steps[this.index].getElementsByClassName('ea-warning')[0].classList.add('ea-active-warning');
+  this.invalids.forEach(i => {
+    i.classList.add('ea-active-warning');
+    i.addEventListener('click', removeErrors);
+    i.addEventListener('focus', removeErrors);
+  });
+}
+
 EaForm.prototype.validateStep = function() {
 
-  let inicio = performance.now();
   let step = this.steps[this.index], nodes = step.childNodes;
-  let checkables = [], invalids = [];
+  let checkables = [];
+   this.invalids = [];
 
   for (let i = 0; i <= nodes.length; i++) {
       if(isFormField(nodes[i])){
           if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
-                  invalids.push(nodes[i]);
+            this.invalids.push(nodes[i]);
           } else if (isCheckableField(nodes[i])) {
-              checkables[nodes[i].name] = checkables[nodes[i].name] || [];
-              checkables[nodes[i].name].push(nodes[i]);
+            checkables[nodes[i].name] = checkables[nodes[i].name] || [];
+            checkables[nodes[i].name].push(nodes[i]);
           }
       }
   }
 
   for (let i in checkables) {
       let valid = checkables[i].filter(isChecked);
-      if (valid.length === 0)
-          invalids.push(checkables[i][0]);
+      if (valid.length === 0){
+        checkables[i].forEach(c =>{
+          this.invalids.push(c);
+        });
+      }
   }
 
-  if(invalids.length === 0)
+  if(this.invalids.length === 0)
       this.showNext();
   else{
-    // lockStep(step);
-    invalids.forEach(showErrors);
-    step.getElementsByClassName('ea-warning')[0].style.color = '#ff0000';
+    this.showErrors();
   }
-  let fim = performance.now();
-
-  console.log(`Tempo de performance: ${fim - inicio.toFixed(4)} ms`);
 }
 
 const stepElements = [];
 const stepObjects = [];
 
-Array.from(document.getElementsByClassName('ea-field')).forEach(f =>{
-  f.addEventListener('change', function(e){
-    e.target.style.background = '#ffffff';
+function removeErrors(e) {
+  e.target.style.background = '#ffffff';
+  Array.from(document.getElementsByClassName('ea-warning')).forEach(f => {
+    f.classList.remove('ea-active-warning');
   });
-})
+  e.target.removeEventListener('click', removeErrors);
+  e.target.removeEventListener('focus', removeErrors);
+}
 
 window.addEventListener('load', e => {
   let allSteps = document.getElementsByClassName('ea-step');
