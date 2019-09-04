@@ -79,7 +79,7 @@ let zipcodemask = new Inputmask("99999-999", {
         setCityFields({});
   }});
 
-
+  
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
   zipcodemask.mask(m);
 });
@@ -109,14 +109,3 @@ let emailmask = new Inputmask({
 Array.from(document.getElementsByClassName('ea-masked-email')).forEach(e => {
   emailmask.mask(e);
 })
-
-const checkForm = (formId) => {
-  let form = document.getElementById(formId);
-  Array.from(form.elements).forEach(e => {
-    if(!e.value){
-      console.log(`Input ${e.name} vazio`)
-    }
-    // checkbox: ao menos um selecionado
-    // Validações de máscara
-  });
-}
