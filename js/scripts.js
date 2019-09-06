@@ -37,7 +37,7 @@ const handleCepResponse = (url, data) => {
     if(data.erro === true){
         console.log("cep não encontrado");
         var cep = url.split("/")[4];
-        setCityFields({cep: cep});
+        setCityFields({cep: cep, ibge: '000000'});
     }
     else setCityFields(data);
 }
@@ -74,16 +74,22 @@ const formToJSON = elements => [].reduce.call(elements, (data, element) => {
   //TODO: Recursão para não haver limite de profundidade
   if(isFormField(element) || isChecked(element)) {
     let keys = element.name.split(".");
-    if ( keys.length == 1 ){
+    if ( keys.length === 1 ){
         data[keys[0]] = element.value;
-    } else {
+    } else if(keys.length === 2){
         data[keys[0]] = data[keys[0]] || {};
         data[keys[0]][keys[1]] = element.value;
+    } else {
+        data[keys[0]] = data[keys[0]] || {};
+        data[keys[0]][keys[1]] = data[keys[0]][keys[1]] || {};
+        data[keys[0]][keys[1]][keys[2]] = element.value;
     }
   }
 
   return data;
 }, {});
+
+
 
 /**
  * Manipula os dados do formulário antes que ele seja enviado para a API
@@ -105,7 +111,7 @@ const handleFormSubmit = (event, form) => {
 const normalize = (data) => {
     data.meta.userApp = data.userApp;
     data.meta.questions = data.questions;
-    data.meta.city = data.city;
+    data.meta.city = {city: data.city, ibge: data.meta.city.ibge};
     return data;
 }
 
@@ -145,6 +151,10 @@ const isEmptyValue = element => {
     } else {
         return element.value === "";
     }
+}
+
+const isOptional = element => {
+    return Array.from(element.classList).includes('ea-optional-field');
 }
 
 /**

@@ -23,9 +23,10 @@
             <div>Preencha seu CEP:</div>
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
-            Cidade: <input type="text" name="city" class="ea-field" id="city<?php echo $unique_id ?>"><br>
-            Estado: <input type="text" name="state" class="ea-field" id="state<?php echo $unique_id ?>"><br>
-            IBGE: <input type="text" name="city.ibge"  class="ea-field" id="ibge<?php echo $unique_id ?>" value="000000"><br>
+            Cidade: <input type="text" name="city" class="ea-field ea-optional-field" id="city<?php echo $unique_id ?>"><br>
+
+            Estado: <input type="text" name="state" class="ea-field ea-optional-field" id="state<?php echo $unique_id ?>"><br>
+            IBGE: <input type="text" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000"><br>
             Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-field ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-masked-phone"><br>
@@ -47,6 +48,7 @@
                 <button id="ea-div-less-categories<?php echo $unique_id ?>" onclick="showLessCategories()">Menos</button><br>
             </div>
             <input type="hidden" name="budgetSubCategory.id" value="79">
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
@@ -56,6 +58,7 @@
             <input type="radio" name="questions.propertyType" value="trade"> Comercial<br>
             <input type="radio" name="questions.propertyType" value="industry"> Industrial<br>
             <input type="radio" name="questions.propertyType" value="other"> Outro<br>
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
@@ -65,6 +68,7 @@
             <input type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses<br>
             <input type="radio" name="questions.start" value="more_than_3_months"> Daqui a mais que 3 meses<br>
             <input type="radio" name="questions.start" value="dont_know"> Ainda não sei<br>
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
@@ -73,6 +77,7 @@
             <input type="text" name="title"/><br>
             Descrição: (melhorar esse nome)<br>
             <textarea name="description"></textarea><br>
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
@@ -84,6 +89,7 @@
             O pedido é para:<br>
             <input type="radio" name="questions.person_type" value="pf"> Pessoa Física<br>
             <input type="radio" name="questions.person_type" value="pj"> Pessoa Jurídica<br>
+            <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>
         <div class="ea-step step<?php echo $unique_id ?>">
@@ -96,14 +102,10 @@
             <input type="radio" name="meta.interest" value="negociar_a_execucao_do_servico_com_um_profissional">
             Negociar a execução do serviço com um profissional<br>
             Estimativa de investimento:<br>
-            <input type="radio" name="estimatedPrice" value="1">
-            R$ 20 mil<br>
-            <input type="radio" name="estimatedPrice" value="2">
-            R$ 40 mil<br>
-            <input type="radio" name="estimatedPrice" value="3">
-            R$ 60 mil<br>
-            <input type="radio" name="estimatedPrice" value="4">
-            R$ 80 mil<br>
+            <input type="radio" name="estimatedPrice" value="1"> R$ 20 mil<br>
+            <input type="radio" name="estimatedPrice" value="2"> R$ 40 mil<br>
+            <input type="radio" name="estimatedPrice" value="3"> R$ 60 mil<br>
+            <input type="radio" name="estimatedPrice" value="4"> R$ 80 mil<br>
             <a onclick="prev('step<?php echo $unique_id ?>')">previous</a>
             <input type="submit"><br>
         </div>

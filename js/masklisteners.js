@@ -1,3 +1,5 @@
+const stepElements = [];
+const stepObjects = [];
 // Objeto EaForm
 
 let EaForm = function(steps){
@@ -14,7 +16,7 @@ EaForm.prototype.init = function() {
 }
 
 EaForm.prototype.hide = function() {
-  this.steps[this.index % this.steps.length].style.display = 'none';
+  this.steps[this.index].style.display = 'none';
 }
 
 EaForm.prototype.showNext = function() {
@@ -36,11 +38,16 @@ EaForm.prototype.walk = function(step) {
 }
 
 EaForm.prototype.showErrors = function() {
+  let focused = false;
   this.steps[this.index].getElementsByClassName('ea-warning')[0].classList.add('ea-active-warning');
   this.invalids.forEach(i => {
+    if(!focused) {
+      i.focus();
+      focused = true;
+    }
     i.classList.add('ea-active-warning');
     i.addEventListener('click', removeErrors);
-    i.addEventListener('focus', removeErrors);
+    i.addEventListener('blur', removeErrors);
   });
 }
 
@@ -48,10 +55,10 @@ EaForm.prototype.validateStep = function() {
 
   let step = this.steps[this.index], nodes = step.childNodes;
   let checkables = [];
-   this.invalids = [];
+  this.invalids = [];
 
   for (let i = 0; i <= nodes.length; i++) {
-      if(isFormField(nodes[i])){
+      if(isFormField(nodes[i]) && !isOptional(nodes[i])){
           if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
             this.invalids.push(nodes[i]);
           } else if (isCheckableField(nodes[i])) {
@@ -64,7 +71,7 @@ EaForm.prototype.validateStep = function() {
   for (let i in checkables) {
       let valid = checkables[i].filter(isChecked);
       if (valid.length === 0){
-        checkables[i].forEach(c =>{
+        checkables[i].forEach(c => {
           this.invalids.push(c);
         });
       }
@@ -77,16 +84,13 @@ EaForm.prototype.validateStep = function() {
   }
 }
 
-const stepElements = [];
-const stepObjects = [];
-
 function removeErrors(e) {
   e.target.style.background = '#ffffff';
   Array.from(document.getElementsByClassName('ea-warning')).forEach(f => {
     f.classList.remove('ea-active-warning');
   });
   e.target.removeEventListener('click', removeErrors);
-  e.target.removeEventListener('focus', removeErrors);
+  e.target.removeEventListener('blur', removeErrors);
 }
 
 window.addEventListener('load', e => {
@@ -113,6 +117,11 @@ let zipcodemask = new Inputmask("99999-999", {
         setCityFields({});
   }, "oncleared": function () {
         setCityFields({});
+  }, "postValidation": function(buffer, pos, currentResult, opts){
+        let cep = buffer.join("").replace("-","");
+        if(cep.length === 8){
+          console.log("pós validação");
+        }
   }});
   
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
