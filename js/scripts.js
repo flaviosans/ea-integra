@@ -72,7 +72,7 @@ const setCityFields = (data) => {
  */
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
   //TODO: Recursão para não haver limite de profundidade
-  if(isFormField(element) || isChecked(element)) {
+  if(isTextField(element) || isChecked(element)) {
     let keys = element.name.split(".");
     if ( keys.length === 1 ){
         data[keys[0]] = element.value;
@@ -171,7 +171,7 @@ const showThanks = () => {
  * @returns {boolean}
  */
 const isTextField = element => {
-    return element.type === 'text' || element.nodeName === 'TEXTAREA';
+    return ['text', 'hidden'].includes(element.type) || element.nodeName === 'TEXTAREA';
 }
 
 /** Verifica se todos os campos do step recebido estão preenchidos.
