@@ -24,7 +24,6 @@
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
             Cidade: <input type="text" name="city" class="ea-field ea-optional-field" id="city<?php echo $unique_id ?>"><br>
-
             Estado: <input type="text" name="state" class="ea-field ea-optional-field" id="state<?php echo $unique_id ?>"><br>
             IBGE: <input type="text" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000"><br>
             Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
@@ -35,19 +34,19 @@
         <div class="ea-step step<?php echo $unique_id ?>">
             <div class="ea-warning">Confira os campos</div>
             <div>Categoria:</div>
-            <input type="radio" name="budgetCategory.id" value="1"> Primeira<br>
-            <input type="radio" name="budgetCategory.id" value="2"> Segunda<br>
-            <input type="radio" name="budgetCategory.id" value="3"> Terceira<br>
-            <button onclick="showMoreCategories()" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </button><br>
-            <div id="ea-div-more-categories<?php echo $unique_id ?>" class="ea-hidden">
-                <input type="radio" name="budgetCategory.id" value="4"> Complementar<br>
-                <input type="radio" name="budgetCategory.id" value="5"> Outro complementar<br>
-                <input type="radio" name="budgetCategory.id" value="6"> Mais um complementar<br>
-                <input type="radio" name="budgetCategory.id" value="7"> Another<br>
-                <input type="radio" name="budgetCategory.id" value="8"> One more time<br>
-                <button id="ea-div-less-categories<?php echo $unique_id ?>" onclick="showLessCategories()">Menos</button><br>
+            <input class="ea-field" type="radio" name="budgetCategory.id" value="1"> Primeira<br>
+            <input class="ea-field" type="radio" name="budgetCategory.id" value="2"> Segunda<br>
+            <input class="ea-field" type="radio" name="budgetCategory.id" value="3"> Terceira<br>
+            <a onclick="showMoreCategories('cat<?php echo $unique_id ?>')" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </a><br>
+            <div id="cat<?php echo $unique_id ?>" class="ea-hidden">
+                <input class="ea-field" type="radio" name="budgetCategory.id" value="4"> Complementar<br>
+                <input class="ea-field" type="radio" name="budgetCategory.id" value="5"> Outro complementar<br>
+                <input class="ea-field" type="radio" name="budgetCategory.id" value="6"> Mais um complementar<br>
+                <input class="ea-field" type="radio" name="budgetCategory.id" value="7"> Another<br>
+                <input class="ea-field" type="radio" name="budgetCategory.id" value="8"> One more time<br>
             </div>
-            <input type="hidden" name="budgetSubCategory.id" value="79">
+            <a id="hideCat<?php echo $unique_id ?>" onclick="showLessCategories('cat<?php echo $unique_id ?>')">Menos</a><br>
+            <input class="ea-field" type="hidden" name="budgetSubCategory.id" value="79">
             <a onclick="prev('step<?php echo $unique_id ?>')">previous</a><br>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
         </div>

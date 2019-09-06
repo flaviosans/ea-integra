@@ -53,7 +53,7 @@ EaForm.prototype.showErrors = function() {
 
 EaForm.prototype.validateStep = function() {
 
-  let step = this.steps[this.index], nodes = step.childNodes;
+  let step = this.steps[this.index], nodes = step.getElementsByClassName('ea-field');
   let checkables = [];
   this.invalids = [];
 
@@ -65,6 +65,11 @@ EaForm.prototype.validateStep = function() {
             checkables[nodes[i].name] = checkables[nodes[i].name] || [];
             checkables[nodes[i].name].push(nodes[i]);
           }
+      }
+
+      if(nodes[i] && nodes[i].nodeName === 'DIV'){
+        console.log(nodes[i]);
+        this.validateStep(nodes[i].children);
       }
   }
 

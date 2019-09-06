@@ -186,3 +186,11 @@ const isTextField = element => {
  const prev = className => {
     stepObjects[className].showPrev();
  }
+
+ const showMoreCategories = elementId => {
+    document.getElementById(elementId).classList.remove('ea-hidden')
+ }
+
+ const showLessCategories = elementId => {
+     document.getElementById(elementId).classList.add('ea-hidden')
+ }
