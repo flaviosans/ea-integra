@@ -8,7 +8,7 @@ const request = (action, method, callback, data = null) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === request.DONE) {
-            return callback(request.responseURL,JSON.parse(request.responseText));
+            return callback(request.responseURL,request.responseText);
         } else {
           console.log(`State: ${request.readyState}, status: ${request.status}`);
         }
@@ -34,6 +34,7 @@ const findCep = (cep) => {
  * @param {JSON} data 
  */
 const handleCepResponse = (url, data) => {
+    data = JSON.parse(data);
     if(data.erro === true){
         console.log("cep não encontrado");
         var cep = url.split("/")[4];
@@ -179,7 +180,7 @@ const isTextField = element => {
  * @param className
  */
 
- const validateStep = className => {
+ const validateStep = (className) => {
     stepObjects[className].validateStep();
  }
 
@@ -188,9 +189,11 @@ const isTextField = element => {
  }
 
  const showMoreCategories = elementId => {
-    document.getElementById(elementId).classList.remove('ea-hidden')
+    document.getElementById('cat' + elementId).classList.remove('ea-hidden');
+    document.getElementById('ea-button-more-categories' + elementId).classList.add('ea-hidden');
  }
 
  const showLessCategories = elementId => {
-     document.getElementById(elementId).classList.add('ea-hidden')
+     document.getElementById('cat'+elementId).classList.add('ea-hidden');
+     document.getElementById('ea-button-more-categories'+elementId).classList.remove()
  }

@@ -1,3 +1,6 @@
+.ea-warning {
+    display: none;
+}
 .ea-active-warning {
     background: #ff0000;
     display: inline;

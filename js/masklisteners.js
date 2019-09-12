@@ -6,6 +6,7 @@ let EaForm = function(steps){
   this.index = 0;
   this.invalids = [];
   this.steps = Array.from(steps);
+  this.form = null;
   this.init();
 };
 
@@ -30,8 +31,9 @@ EaForm.prototype.showPrev = function() {
 EaForm.prototype.walk = function(step) {
     this.hide();
     this.index+=step;
-    if(this.index === this.steps.length)
-      this.index = 0;
+    if(this.index === this.steps.length){
+      this.index = 0;  
+    }
     if(this.index < 0 )
       this.index = this.steps.length - 1;
     this.steps[this.index].style.display = 'inline';
@@ -53,23 +55,21 @@ EaForm.prototype.showErrors = function() {
 
 EaForm.prototype.validateStep = function() {
 
-  let step = this.steps[this.index], nodes = step.getElementsByClassName('ea-field');
+  let step = this.steps[this.index], 
+  nodes = step.getElementsByClassName('ea-field'),
+  submit = step.getElementsByClassName('ea-submit')[0];
   let checkables = [];
   this.invalids = [];
 
   for (let i = 0; i <= nodes.length; i++) {
       if(isFormField(nodes[i]) && !isOptional(nodes[i])){
+          if(!this.form) this.form = nodes[i].form;
           if (isTextField(nodes[i]) && isEmptyValue(nodes[i])) {
             this.invalids.push(nodes[i]);
           } else if (isCheckableField(nodes[i])) {
             checkables[nodes[i].name] = checkables[nodes[i].name] || [];
             checkables[nodes[i].name].push(nodes[i]);
           }
-      }
-
-      if(nodes[i] && nodes[i].nodeName === 'DIV'){
-        console.log(nodes[i]);
-        this.validateStep(nodes[i].children);
       }
   }
 
@@ -83,7 +83,10 @@ EaForm.prototype.validateStep = function() {
   }
 
   if(this.invalids.length === 0)
-      this.showNext();
+      if(submit)
+        submit.click();
+      else
+        this.showNext();
   else{
     this.showErrors();
   }
@@ -102,6 +105,7 @@ window.addEventListener('load', e => {
   let allSteps = document.getElementsByClassName('ea-step');
   Array.from(allSteps).forEach(s => {
     let secondClass = s.classList[1];
+    let id = secondClass.substr(4);
     stepElements[secondClass] = stepElements[secondClass] || [];
     stepElements[secondClass].push(s);
   });
@@ -122,11 +126,6 @@ let zipcodemask = new Inputmask("99999-999", {
         setCityFields({});
   }, "oncleared": function () {
         setCityFields({});
-  }, "postValidation": function(buffer, pos, currentResult, opts){
-        let cep = buffer.join("").replace("-","");
-        if(cep.length === 8){
-          console.log("pós validação");
-        }
   }});
   
 Array.from(document.getElementsByClassName('ea-masked-zipcode')).forEach(m => {
