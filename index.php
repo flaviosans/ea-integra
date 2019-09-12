@@ -25,7 +25,7 @@
             CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
             Cidade: <input type="text" name="city" class="ea-field ea-optional-field" id="city<?php echo $unique_id ?>"><br>
             Estado: <input type="text" name="state" class="ea-field ea-optional-field" id="state<?php echo $unique_id ?>"><br>
-            IBGE: <input type="text" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000"><br>
+            <input type="hidden" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000">
             Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
             E-mail: <input type="text" name="userApp.email" class="ea-field ea-masked-email"/><br>
             Telefone: <input type="text" name="userApp.phone" class="ea-field ea-masked-phone"><br>
@@ -108,6 +108,11 @@
             <a onclick="prev('step<?php echo $unique_id ?>')">previous</a>
             <a onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a><br>
             <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro"><br>
+        </div>
+        <div class="ea-step step<?php echo $unique_id ?>">
+            <div class="ea-wait">Aguarde, estamos gravando a sua solicitação...</div>
+            <div class="ea-success ea-hidden">Obrigado pelo orçamento! <br> 
+            <a onclick="validateStep('step<?php echo $unique_id ?>')">Quero fazer outro orçamento!</a><br>
         </div>
     </form>
   <script src="js/inputmask.js"></script>

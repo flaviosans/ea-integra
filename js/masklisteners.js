@@ -3,21 +3,22 @@ const stepObjects = [];
 // Objeto EaForm
 
 let EaForm = function(steps){
-  this.index = 0;
+  this.stepIndex = 0;
+  this.fieldIndex = 0;
   this.invalids = [];
   this.steps = Array.from(steps);
-  this.form = null;
   this.init();
 };
 
 EaForm.prototype.init = function() {
-  for(let i = 1; i < this.steps.length; i++){
-    this.steps[i].style.display = 'none';
+  for(let i = 0; i < this.steps.length; i++){
+    if(i !== 0)
+      this.steps[i].style.display = 'none';
   }
 }
 
 EaForm.prototype.hide = function() {
-  this.steps[this.index].style.display = 'none';
+  this.steps[this.stepIndex].style.display = 'none';
 }
 
 EaForm.prototype.showNext = function() {
@@ -30,18 +31,18 @@ EaForm.prototype.showPrev = function() {
 
 EaForm.prototype.walk = function(step) {
     this.hide();
-    this.index+=step;
-    if(this.index === this.steps.length){
-      this.index = 0;  
+    this.stepIndex+=step;
+    if(this.stepIndex === this.steps.length){
+      this.stepIndex = 0;  
     }
-    if(this.index < 0 )
-      this.index = this.steps.length - 1;
-    this.steps[this.index].style.display = 'inline';
+    if(this.stepIndex < 0 )
+      this.stepIndex = this.steps.length - 1;
+    this.steps[this.stepIndex].style.display = 'inline';
 }
 
 EaForm.prototype.showErrors = function() {
   let focused = false;
-  this.steps[this.index].getElementsByClassName('ea-warning')[0].classList.add('ea-active-warning');
+  this.steps[this.stepIndex].getElementsByClassName('ea-warning')[0].classList.add('ea-active-warning');
   this.invalids.forEach(i => {
     if(!focused) {
       i.focus();
@@ -55,7 +56,7 @@ EaForm.prototype.showErrors = function() {
 
 EaForm.prototype.validateStep = function() {
 
-  let step = this.steps[this.index], 
+  let step = this.steps[this.stepIndex], 
   nodes = step.getElementsByClassName('ea-field'),
   submit = step.getElementsByClassName('ea-submit')[0];
   let checkables = [];
@@ -83,8 +84,10 @@ EaForm.prototype.validateStep = function() {
   }
 
   if(this.invalids.length === 0)
-      if(submit)
+      if(submit){
         submit.click();
+          this.walk(1);
+      }
       else
         this.showNext();
   else{
@@ -105,7 +108,6 @@ window.addEventListener('load', e => {
   let allSteps = document.getElementsByClassName('ea-step');
   Array.from(allSteps).forEach(s => {
     let secondClass = s.classList[1];
-    let id = secondClass.substr(4);
     stepElements[secondClass] = stepElements[secondClass] || [];
     stepElements[secondClass].push(s);
   });
@@ -156,4 +158,13 @@ let emailmask = new Inputmask({
 });
 Array.from(document.getElementsByClassName('ea-masked-email')).forEach(e => {
   emailmask.mask(e);
+})
+
+Array.from(document.getElementsByClassName('ea-field')).forEach(f => {
+  f.addEventListener('keydown', function(e) {
+    if(e.keyCode == 13){
+      e.preventDefault();
+      e.keyCode = 9;
+    }
+  });
 })

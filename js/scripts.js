@@ -4,18 +4,37 @@
  * @param {string} action 
  * @param {string} method 
  */
-const request = (action, method, callback, data = null) => {
+const request = (action, method, doneCallback, data = console.log, waitCallback = console.log, fallback = console.log) => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === request.DONE) {
-            return callback(request.responseURL,request.responseText);
+            if(request.status === 200 || request.status === 201)
+                doneCallback(request.responseURL,request.responseText);
+            else fallback(data, request.responseText);
         } else {
-          console.log(`State: ${request.readyState}, status: ${request.status}`);
+            waitCallback(request.responseURL,request.responseText);
         }
     }
     request.open(method, action, true);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify(data));
+}
+
+/**
+ * Request de backup, caso o request principal dê erro
+ * @param {*} data 
+ * @param {*} response 
+ */
+const backup = (data, response) => {
+    let fallBackData = {
+        "name" : "Plugin do Entenda Antes",
+        "email" : "contato@entendaantes.com.br",
+        "phone" : "4335344138",
+        "title" : "Contato do blog",
+        "category" : "comercial",
+        "description" : `${JSON.stringify(data)} ${JSON.stringify(response)}`
+    };
+    request('http://localhost:8080/feedback', 'post', showThanks, fallBackData);
 }
 
 /**
@@ -101,8 +120,7 @@ const handleFormSubmit = (event, form) => {
     event.preventDefault();
     const data = formToJSON(form.elements);
     const normalizedData = normalize(data);
-    //TODO: Mostrar um loader até a requisição voltar
-    request( form.action, 'post', showThanks, normalizedData);
+    request( form.action, 'post', showThanks, normalizedData, showWait, backup);
 };
 
 /**
@@ -162,8 +180,23 @@ const isOptional = element => {
  * Exibe a tela de agradecimento ao leitor
  */
 const showThanks = () => {
-    //TODO: rotina de "obrigado por preencher" vem aqui
+    Array.from(document.getElementsByClassName('ea-wait')).forEach(w => {
+        w.classList.add('ea-hidden');
+    });
+    Array.from(document.getElementsByClassName('ea-success')).forEach(s => {
+        s.classList.remove('ea-hidden');
+    })
     console.log("thanks!");
+
+}
+
+const showWait = () => {
+    Array.from(document.getElementsByClassName('ea-wait')).forEach(w => {
+        w.classList.remove('ea-hidden');
+    });
+    Array.from(document.getElementsByClassName('ea-success')).forEach(s => {
+        s.classList.add('ea-hidden');
+    })
 }
 
 /** Verifica se é um campo do tipo 'text'
