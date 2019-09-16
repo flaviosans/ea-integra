@@ -116,7 +116,7 @@
         </div>
     </form>
   <script src="js/inputmask.js"></script>
-  <script src="js/masklisteners.js"></script>
-  <script src="js/scripts.js"></script>
+  <script src="js/listeners.js"></script>
+  <script src="js/core.js"></script>
 </body>
 </html>
