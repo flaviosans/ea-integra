@@ -6,11 +6,13 @@
   <meta name="description" content="Protótipo - Formulário de Orçamento">
   <meta name="author" content="Entenda Antes!">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
 </head>
 
 <body>
+<style>
 
+</style>
 <?php 
   $unique_id = 'n555';
   $referer_id = 1234567890;
@@ -19,170 +21,345 @@
   $api_url = "http://localhost:8080";
 
   // CSS Properties
-  $css_container = "pure-form pure-form-stacked";
-  $css_step = "pure-form pure-form-aligned";
-  $css_default_button = "pure-button pure-button-primary";
-  $css_prev_button = "pure-button pure-button-primary";
-  $css_next_button = "pure-button pure-button-primary";
-  $css_button_group = "pure-u-2-5";
+  $css_container = "";
+  $css_step = "row";
+  $css_default_button = "button primary";
+  $css_primary_button = "button primary";
+  $css_prev_button = $css_primary_button;
+  $css_next_button = $css_primary_button;
+  $css_control_group = "col-sm-12 col-md-6";
+  $css_button_group = $css_control_group;
+  $css_checkbox = "button primary";
+  $css_radio = "button primary";
+  $css_row = "row";
+  $css_full_grid = "col-sm-12 col-md-12";
+  $css_radio_grid = "col-sm-12 col-md-6";
+
 ?>
 
-    <form  class="<?php echo $css_container ?>" action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-warning">Confira os campos</div>
-            <div>Preencha seu CEP:</div>
+<form  class="<?php echo $css_container ?>" action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content <?php echo $css_row ?>">
+            <div class="ea-step-title <?php echo $css_full_grid ?>">
+                <span>CEP, e endereço</span>
+                <div class="ea-warning">Confira os campos</div>
+            </div>
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
-            CEP: <input type="text" name="zipCode" class="ea-field ea-masked-zipcode"><br>
-            Cidade: <input type="text" name="city" class="ea-field ea-optional-field" id="city<?php echo $unique_id ?>"><br>
-            Estado: <input type="text" name="state" class="ea-field ea-optional-field" id="state<?php echo $unique_id ?>"><br>
             <input type="hidden" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000">
-            Nome: <input type="text" name="userApp.name" class="ea-field"/><br>
-            E-mail: <input type="text" name="userApp.email" class="ea-field ea-masked-email"/><br>
-            Telefone: <input type="text" name="userApp.phone" class="ea-field ea-masked-phone"><br>
 
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+            <div class="<?php echo $css_control_group ?>">
+                <label for="zipCode">CEP:</label>
+                <input type="text" name="zipCode" class="ea-field ea-masked-zipcode">
             </div>
 
+            <div class="<?php echo $css_control_group ?>">
+                <label for="city">Cidade:</label>
+                <input type="text" name="city" class="ea-field ea-optional-field" id="city<?php echo $unique_id ?>">
+            </div>
+            <div class="<?php echo $css_control_group ?>">
+                <label for="state">Estado:</label>
+                <input type="text" name="state" class="ea-field ea-optional-field" id="state<?php echo $unique_id ?>">
+            </div>
+            <div class="<?php echo $css_control_group ?>">
+                <label for="userApp.name">Nome:</label> <input type="text" name="userApp.name" class="ea-field"/>
+            </div>
+            <div class="<?php echo $css_control_group ?>">
+                <label for="userApp.email">E-mail:</label>
+                <input type="text" name="userApp.email" class="ea-field ea-masked-email"/>
+            </div>
+            <div class="<?php echo $css_control_group ?>">
+                <label for="userApp.phone">Telefone:</label>
+                <input type="text" name="userApp.phone" class="ea-field ea-masked-phone">
+            </div>
         </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-warning">Confira os campos</div>
-            <div>Categoria:</div>
-            <input class="ea-field" type="radio" name="budgetCategory.id" value="1"> Primeira<br>
-            <input class="ea-field" type="radio" name="budgetCategory.id" value="2"> Segunda<br>
-            <input class="ea-field" type="radio" name="budgetCategory.id" value="3"> Terceira<br>
-            <a class="<?php echo $css_default_button ?>" onclick="showMoreCategories('<?php echo $unique_id ?>')" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </a>
-            <div id="cat<?php echo $unique_id ?>" class="ea-hidden">
-                <input class="ea-field" type="radio" name="budgetCategory.id" value="4"> Complementar<br>
-                <input class="ea-field" type="radio" name="budgetCategory.id" value="5"> Outro complementar<br>
-                <input class="ea-field" type="radio" name="budgetCategory.id" value="6"> Mais um complementar<br>
-                <input class="ea-field" type="radio" name="budgetCategory.id" value="7"> Another<br>
-                <input class="ea-field" type="radio" name="budgetCategory.id" value="8"> One more time<br>
-                <a id="hideCat<?php echo $unique_id ?>" onclick="showLessCategories('<?php echo $unique_id ?>')">Menos</a><br>
+
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
             </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
+            <div class="ea-step-title">
+                <span>Categoria</span>
+                <div class="ea-warning">Confira os campos</div>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <div class="<?php echo $css_radio_grid ?>">
+                    <label class="<?php echo $css_radio ?>">
+                        <input class="ea-field" type="radio" name="budgetCategory.id" value="1"> Primeira
+                    </label>
+                </div>
+            </div>
+
+            <div class="<?php echo $css_row ?>">
+                <div class="<?php echo $css_radio_grid ?>">
+                    <label class="<?php echo $css_radio ?>">
+                        <input class="ea-field" type="radio" name="budgetCategory.id" value="2"> Segunda
+                    </label>
+                </div>
+            </div>
+
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="budgetCategory.id" value="3"> Terceira
+                </label>
+            </div>
+            <div id="ea-hidden-cats<?php echo $unique_id ?>" class="ea-hidden">
+                    <div class="<?php echo $css_row ?>">
+                        <label class="<?php echo $css_radio ?>">
+                            <input class="ea-field" type="radio" name="budgetCategory.id" value="4"> Complementar
+                        </label>
+                    </div>
+                    <div class="<?php echo $css_row ?>">
+                        <label class="<?php echo $css_radio ?>">
+                            <input class="ea-field" type="radio" name="budgetCategory.id" value="5"> Outro complementar
+                        </label>
+                    </div>
+                    <div>
+                        <label class="<?php echo $css_radio ?>">
+                            <input class="ea-field" type="radio" name="budgetCategory.id" value="6"> Mais um complementar
+                        </label>
+                    </div>
+                    <div>
+                        <label class="<?php echo $css_radio ?>">
+                            <input class="ea-field" type="radio" name="budgetCategory.id" value="7"> Another
+                        </label>
+                    </div>
+                    <div>
+                        <label class="<?php echo $css_radio ?>">
+                            <input class="ea-field" type="radio" name="budgetCategory.id" value="8"> One more time
+                        </label>
+                    </div>
+                </div>
+            <label class="<?php echo $css_radio ?>">
+                <a class="<?php echo $css_radio ?>" onclick="switchCategories('<?php echo $unique_id ?>', this)" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </a>
+            </label>
             <input class="ea-field" type="hidden" name="budgetSubCategory.id" value="79">
+            </div>
 
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
+            <div class="ea-step-title">
+                <span>Tipo de imóvel:</span>
+                <div class="ea-warning">Confira os campos</div>
+            </div>
+
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.propertyType" value="residence"> Residencial
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.propertyType" value="trade"> Comercial
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.propertyType" value="industry"> Industrial
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.propertyType" value="other"> Outro
+                </label>
+            </div>
+        </div>
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
+            <div class="ea-step-title">
+                <span>Quando pretende começar:</span>
+                <div class="ea-warning">Confira os campos</div>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.start" value="afap"> O mais rápido possível
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses
+                </label>
+            </div>
+            <div>
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.start" value="more_than_3_months"> Daqui a mais que 3 meses
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.start" value="dont_know"> Ainda não sei
+                </label>
             </div>
 
         </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
+            <div class="ea-step-title">
+                <span>Agora nos diga o que você precisa</span>
+                <div class="ea-warning">Confira os campos</div>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <div class="<?php echo $css_full_grid?>">
+                    Título: (melhorar esse nome)
+                </div>
+                <div class="<?php echo $css_full_grid?>">
+                    <input class="ea-field pure-input-1-2" type="text" name="title" placeholder="Ex.: quero reformar meu escritório"/>
+                </div>
+                <div class="<?php echo $css_full_grid?>">
+                    Descrição: (melhorar esse nome)
+                </div>
+                <div class="<?php echo $css_full_grid?>">
+                    <textarea class="ea-field ea-field pure-input-1-2" name="description" placeholder="Adicione os detalhes que você gostaria de explicar para o profissional. Quanto mais informações, melhor e mais rápida será a resposta!"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
             <div class="ea-warning">Confira os campos</div>
-            Tipo de imóvel:<br>
-            <input class="ea-field" type="radio" name="questions.propertyType" value="residence"> Residencial<br>
-            <input class="ea-field" type="radio" name="questions.propertyType" value="trade"> Comercial<br>
-            <input class="ea-field" type="radio" name="questions.propertyType" value="industry"> Industrial<br>
-            <input class="ea-field" type="radio" name="questions.propertyType" value="other"> Outro<br>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+            Melhor horário para contato:
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.contact_hour" value="morning"> Manhã
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.contact_hour" value="afternoon"> Tarde
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.contact_hour" value="night"> Noite
+                </label>
             </div>
 
+
+
+            O pedido é para:
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.person_type" value="pf"> Pessoa Física
+                </label>
+            </div>
+            <div class="<?php echo $css_row ?>">
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="questions.person_type" value="pj"> Pessoa Jurídica
+                </label>
+            </div>
         </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-step-content">
             <div class="ea-warning">Confira os campos</div>
-            Quando pretende começar:<br>
-            <input class="ea-field" type="radio" name="questions.start" value="afap"> O mais rápido possível<br>
-            <input class="ea-field" type="radio" name="questions.start" value="from_1_to_3_months"> Entre 1 e 3 meses<br>
-            <input class="ea-field" type="radio" name="questions.start" value="more_than_3_months"> Daqui a mais que 3 meses<br>
-            <input class="ea-field" type="radio" name="questions.start" value="dont_know"> Ainda não sei<br>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+            Interesse:
+            <div>
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">Saber apenas preços a fim de comparação
+                </label>
+            </div>
+            <div>
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="meta.interest" value="tirar_duvidas_para_saber_melhor_o_que_desejo_fazer">
+                    Tirar dúvidas para saber melhor o que desejo fazer
+                </label>
+            </div>
+            <div>
+                <label class="<?php echo $css_radio ?>">
+                    <input class="ea-field" type="radio" name="meta.interest" value="negociar_a_execucao_do_servico_com_um_profissional">
+                    Negociar a execução do serviço com um profissional
+                </label>
             </div>
 
-        </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-warning">Confira os campos</div>
-            Título: (Tirar esse campo?)<br>
-            <input class="ea-field" type="text" name="title"/><br>
-            Descrição: (melhorar esse nome)<br>
-            <textarea class="ea-field" name="description"></textarea><br>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+            Estimativa de investimento:
+            <div>
+                <label class="<?php echo $css_radio ?>"><input class="ea-field" type="radio" name="estimatedPrice" value="1"> R$ 20 mil</label>
             </div>
-
-        </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-warning">Confira os campos</div>
-            Melhor horário para contato:<br>
-            <input class="ea-field" type="radio" name="questions.contact_hour" value="morning"> Manhã<br>
-            <input class="ea-field" type="radio" name="questions.contact_hour" value="afternoon"> Tarde<br>
-            <input class="ea-field" type="radio" name="questions.contact_hour" value="night"> Noite<br>
-            O pedido é para:<br>
-            <input class="ea-field" type="radio" name="questions.person_type" value="pf"> Pessoa Física<br>
-            <input class="ea-field" type="radio" name="questions.person_type" value="pj"> Pessoa Jurídica<br>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>                
-                </div>
+            <div>
+                <label class="<?php echo $css_radio ?>"><input class="ea-field" type="radio" name="estimatedPrice" value="2"> R$ 40 mil</label>
             </div>
-
-        </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-warning">Confira os campos</div>
-            <br>Interesse:<br>
-            <input class="ea-field" type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
-            Saber apenas preços a fim de comparação<br>
-            <input class="ea-field" type="radio" name="meta.interest" value="tirar_duvidas_para_saber_melhor_o_que_desejo_fazer">
-            Tirar dúvidas para saber melhor o que desejo fazer<br>
-            <input class="ea-field" type="radio" name="meta.interest" value="negociar_a_execucao_do_servico_com_um_profissional">
-            Negociar a execução do serviço com um profissional<br>
-            Estimativa de investimento:<br>
-            <input class="ea-field" type="radio" name="estimatedPrice" value="1"> R$ 20 mil<br>
-            <input class="ea-field" type="radio" name="estimatedPrice" value="2"> R$ 40 mil<br>
-            <input class="ea-field" type="radio" name="estimatedPrice" value="3"> R$ 60 mil<br>
-            <input class="ea-field" type="radio" name="estimatedPrice" value="4"> R$ 80 mil<br>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
-                    <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro"><br>
-                </div>
+            <div>
+                <label class="<?php echo $css_radio ?>"><input class="ea-field" type="radio" name="estimatedPrice" value="3"> R$ 60 mil</label>
             </div>
+            <div>
+                <label class="<?php echo $css_radio ?>"><input class="ea-field" type="radio" name="estimatedPrice" value="4"> R$ 80 mil</label>
+            </div>
+        </div>
 
+        <div class="<?php echo $css_button_group ?>">
+            <div class="<?php echo $css_prev_button ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+            </div>
+            <div class="<?php echo $css_next_button ?>">
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro">
+            </div>
         </div>
-        <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-            <div class="ea-wait">Aguarde, estamos gravando a sua solicitação...</div>
-            <div class="ea-success ea-hidden">Obrigado pelo orçamento! <br> 
-            <a onclick="validateStep('step<?php echo $unique_id ?>')">Quero fazer outro orçamento!</a><br>
-        </div>
-    </form>
-  <script src="js/inputmask.js"></script>
+
+    </div>
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+        <div class="ea-wait">Aguarde, estamos gravando a sua solicitação...</div>
+        <div class="ea-success ea-hidden">Obrigado pelo orçamento!
+        <a onclick="validateStep('step<?php echo $unique_id ?>')">Quero fazer outro orçamento!</a>
+    </div>
+</form>
+
+<script src="js/inputmask.js"></script>
   <script src="js/listeners.js"></script>
   <script src="js/core.js"></script>
 </body>

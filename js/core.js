@@ -221,12 +221,16 @@ const isTextField = element => {
     stepObjects[className].showPrev();
  }
 
- const showMoreCategories = elementId => {
-    document.getElementById('cat' + elementId).classList.remove('ea-hidden');
-    document.getElementById('ea-button-more-categories' + elementId).classList.add('ea-hidden');
- }
+ const switchCategories = (elementId, element) => {
+    let cats = document.getElementById('ea-hidden-cats' + elementId);
 
- const showLessCategories = elementId => {
-     document.getElementById('cat'+elementId).classList.add('ea-hidden');
-     document.getElementById('ea-button-more-categories'+elementId).classList.remove()
+    if (cats.classList.contains('ea-hidden')){
+        cats.classList.remove('ea-hidden');
+        element.innerHTML = "Menos categorias...";
+    }
+    else {
+        cats.classList.add('ea-hidden');
+        element.innerHTML = "Mais categorias...";
+    }
+
  }

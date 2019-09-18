@@ -8,3 +8,14 @@
 .ea-hidden {
     display: none;
 }
+
+.ea-step-content {
+    height: 450px;
+}
+.ea-step-title {
+    height: 30px;
+}
+
+.ea-step-title span {
+    color: blue;
+}
