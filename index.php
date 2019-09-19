@@ -11,6 +11,19 @@
 
 <body>
 
+
+<style>
+    .ea-field[type="radio"] {
+        display: none;
+    }
+    .ea-field[type="radio"]:checked+label {
+        background-color: #FF7700;
+    }
+    .ea-full-width-item {
+        width: 80%;
+    }
+</style>
+
 <?php 
   $unique_id = 'n555';
   $referer_id = 1234567890;
@@ -35,23 +48,12 @@
   $css_form_group = "form-group";
   $css_button_group = $css_form_group;
   $css_checkbox = "button primary";
-  $css_radio = "button primary";
-  $css_radio_grid = "col-sm-6 col-md-6";
+  $css_radio = "button primary ea-full-width-item";
+  $css_radio_grid = "col-12 col-sm-6 col-md-4";
   $css_form_control = "form-control";
 
   $css_step = $css_container;
-
 ?>
-
-<style>
-    .ea-field[type="radio"] {
-        display: none;
-    }
-    .ea-field[type="radio"]:checked+label {
-        background-color: #FF7700;
-    }
-</style>
-
 
 <form  class="<?php echo $css_form ?>" action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
     <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
@@ -127,9 +129,9 @@
                         Label 3
                     </label>
                 </div>
-                <div class="<?php echo $css_radio_grid ?>">
+                <div onclick="switchCategories('<?php echo $unique_id ?>', this)" class="<?php echo $css_radio_grid ?>">
                     <label class="<?php echo $css_radio ?>">
-                        <a  onclick="switchCategories('<?php echo $unique_id ?>', this)" id="ea-button-more-categories<?php echo $unique_id ?>">Mais... </a>
+                        Mais...
                     </label>
                 </div>
             </div>
@@ -258,11 +260,11 @@
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_form_group?>">
                     <label>Título: (melhorar esse nome)</label><br>
-                    <input class="<?php echo $css_form_control ?>" type="text" name="title" placeholder="Ex.: quero reformar meu escritório"/>
+                    <input class="ea-field <?php echo $css_form_control ?>" type="text" name="title" placeholder="Ex.: quero reformar meu escritório"/>
                 </div>
                 <div class="<?php echo $css_full_grid?>">
                     <label for="">Descrição: (melhorar esse nome)</label><br>
-                    <textarea class="<?php echo $css_form_control ?>" name="description" placeholder="Adicione os detalhes que você gostaria de explicar para o profissional. Quanto mais informações, melhor e mais rápida será a resposta!"></textarea>
+                    <textarea class="ea-field <?php echo $css_form_control ?>" name="description" placeholder="Adicione os detalhes que você gostaria de explicar para o profissional. Quanto mais informações, melhor e mais rápida será a resposta!"></textarea>
                 </div>
             </div>
         </div>

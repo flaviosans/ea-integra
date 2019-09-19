@@ -223,14 +223,15 @@ const isTextField = element => {
 
  const switchCategories = (elementId, element) => {
     let cats = document.getElementById('ea-hidden-cats' + elementId);
+    let text = element.getElementsByTagName('label')[0];
 
     if (cats.classList.contains('ea-hidden')){
         cats.classList.remove('ea-hidden');
-        element.innerHTML = "Menos...";
+        text.innerHTML = "Menos...";
     }
     else {
         cats.classList.add('ea-hidden');
-        element.innerHTML = "Mais...";
+        text.innerHTML = "Mais...";
     }
 
  }
