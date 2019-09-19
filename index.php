@@ -22,6 +22,7 @@
     .ea-full-width-item {
         width: 80%;
     }
+
 </style>
 
 <?php 
@@ -32,7 +33,6 @@
   $api_url = "http://localhost:8080";
 
   // Elemento que vai conter o grid
-  $css_container = "container";
   $css_row = "row";
   $css_form = "";
   // Botão padrão
@@ -43,7 +43,7 @@
   // Botão 'próximo'
   $css_next_button = $css_primary_button;
   // Para coluna de linha inteira
-  $css_full_grid = "col-sm-12 col-md-12";
+  $css_full_grid = "row";
   // Div do Input do formulário
   $css_form_group = "form-group";
   $css_button_group = $css_form_group;
@@ -52,22 +52,25 @@
   $css_radio_grid = "col-12 col-sm-6 col-md-4";
   $css_form_control = "form-control";
 
-  $css_step = $css_container;
+  $css_container = "container";
 ?>
 
 <form  class="<?php echo $css_form ?>" action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+    <div class="<?php echo $css_row ?>">
+        <div class="ea-step-title">
+            <h2>Onde será feito o trabalho?</h2>
+            <span class="ea-warning">Confira os campos que estão faltando</span>
+        </div>
         <div class="ea-step-content <?php echo $css_row ?>">
-            <div class="ea-step-title <?php echo $css_full_grid ?>">
-                <span>CEP, e endereço</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
             <input type="hidden" name="meta.city.ibge"  class="ea-field ea-optional-field" id="ibge<?php echo $unique_id ?>" value="000000">
 
-            <div class="<?php echo $css_form_group ?>">
-                <label for="zipCode">CEP:</label><br>
-                <input type="text" name="zipCode" class="ea-field ea-masked-zipcode <?php echo $css_form_control ?>">
+            <div class="<?php echo $css_full_grid ?>">
+                <div class="<?php echo $css_form_group ?>">
+                    <label for="zipCode">CEP:</label><br>
+                    <input type="text" name="zipCode" class="ea-field ea-masked-zipcode <?php echo $css_form_control ?>">
+                </div>
             </div>
 
             <div class="<?php echo $css_form_group ?>">
@@ -91,7 +94,6 @@
                 <input type="text" name="userApp.phone" class="ea-field ea-masked-phone  <?php echo $css_form_control ?>">
             </div>
         </div>
-
         <div class="<?php echo $css_button_group ?>">
             <div class="<?php echo $css_prev_button ?>">
                 <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
@@ -100,14 +102,15 @@
                 <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
+    </div>
 
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title">
+            <h2>O orçamento que você deseja se encaixa em qual categoria?</h2>
+            <div class="ea-warning">Escolha ao menos uma categoria</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title">
-                <span>Categoria</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_radio_grid ?>">
                     <input class="ea-field" id="budgetCategory.id.1<?php echo $unique_id ?>" type="radio" name="budgetCategory.id" value="1">
@@ -176,13 +179,12 @@
                 </div>
             </div>
         </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title">
+            <h2>Qual é o tipo de imóvel?</h2>
+            <div class="ea-warning">Escolha o tipo de imóvel mais adequado</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title">
-                <span>Tipo de imóvel:</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
-
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_radio_grid ?>">
                     <input id="propType1<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.propertyType" value="residence">
@@ -213,12 +215,12 @@
             </div>
         </div>
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title">
+            <h2>Quando pretende começar?</h2>
+            <div class="ea-warning">Confira os campos</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title">
-                <span>Quando pretende começar:</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_radio_grid ?>">
                     <input id="start1<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.start" value="afap">
@@ -251,19 +253,19 @@
             </div>
         </div>
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title">
+            <h2>Queremos saber um pouco mais sobre seu pedido</h2>
+            <div class="ea-warning">Confira os campos</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title">
-                <span>Agora nos diga o que você precisa</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_form_group?>">
-                    <label>Título: (melhorar esse nome)</label><br>
+                    <label>Nos dê uma descrição rápida do que você precisa:</label><br>
                     <input class="ea-field <?php echo $css_form_control ?>" type="text" name="title" placeholder="Ex.: quero reformar meu escritório"/>
                 </div>
                 <div class="<?php echo $css_full_grid?>">
-                    <label for="">Descrição: (melhorar esse nome)</label><br>
+                    <label for="">Escreva aqui, com mais detalhes</label><br>
                     <textarea class="ea-field <?php echo $css_form_control ?>" name="description" placeholder="Adicione os detalhes que você gostaria de explicar para o profissional. Quanto mais informações, melhor e mais rápida será a resposta!"></textarea>
                 </div>
             </div>
@@ -278,13 +280,12 @@
             </div>
         </div>
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title <?php echo $css_full_grid ?>">
+            <h2>Melhor horário para contato:</h2>
+            <div class="ea-warning">Confira os campos</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title <?php echo $css_full_grid ?>">
-                <span>Melhor horário para contato:</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
-
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_radio_grid ?>">
                     <input id="contm<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.contact_hour" value="morning">
@@ -302,23 +303,24 @@
                     </label>
                 </div>
             </div>
+        </div>
+        <div class="ea-step-title <?php echo $css_full_grid ?>">
+            <h2>O pedido é para:</h2>
+            <div class="ea-warning">Confira os campos</div>
+        </div>
+        <div class="step-content">
+            <div class="<?php echo $css_row ?>">
+                    <div class="<?php echo $css_radio_grid ?>">
+                        <input id="ptype1<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pf">
+                        <label for="ptype1<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Física
+                        </label>
+                    </div>
+                    <div class="<?php echo $css_radio_grid ?>">
+                        <input id="ptype2<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pj">
+                        <label for="ptype2<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Jurídica
+                        </label>
+                    </div>
 
-            <div class="ea-step-title <?php echo $css_full_grid ?>">
-                <span>O pedido é para:</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
-
-            <div class="<?php echo $css_radio_grid?>">
-                <div class="<?php echo $css_radio_grid ?>">
-                    <input id="ptype1<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pf">
-                    <label for="ptype1<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Física
-                    </label>
-                </div>
-                <div class="<?php echo $css_radio_grid ?>">
-                    <input id="ptype2<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pj">
-                    <label for="ptype2<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Jurídica
-                    </label>
-                </div>
             </div>
         </div>
 
@@ -331,13 +333,12 @@
             </div>
         </div>
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+        <div class="ea-step-title <?php echo $css_full_grid ?>">
+            <h2>Interesse:</h2>
+            <div class="ea-warning">Confira os campos</div>
+        </div>
         <div class="ea-step-content">
-            <div class="ea-step-title <?php echo $css_full_grid ?>">
-                <span>Interesse:</span>
-                <div class="ea-warning">Confira os campos</div>
-            </div>
-
             <div class="<?php echo $css_row ?>">
                 <div class="<?php echo $css_radio_grid ?>">
                     <input id="interest1<?php echo $unique_id ?>" class="ea-field" type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
@@ -359,7 +360,7 @@
             </div>
 
             <div class="ea-step-title <?php echo $css_full_grid ?>">
-                <span>Estimativa de investimento:</span>
+                <h2>Estimativa de investimento:</h2>
                 <div class="ea-warning">Confira os campos</div>
             </div>
             <div class="<?php echo $css_row ?>">
@@ -395,9 +396,11 @@
             </div>
         </div>
     </div>
-    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_step ?>">
-        <div class="ea-wait">Aguarde, estamos gravando a sua solicitação...</div>
-        <div class="ea-success ea-hidden">Obrigado pelo orçamento!
+    <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+       <div class="ea-step-title">
+           <h2 class="ea-wait">Aguarde, estamos gravando a sua solicitação...</h2>
+           <h2 class="ea-success ea-hidden">Obrigado pelo orçamento!
+       </h2>
         <a onclick="validateStep('step<?php echo $unique_id ?>')">Quero fazer outro orçamento!</a>
     </div>
 </form>
