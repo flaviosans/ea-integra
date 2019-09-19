@@ -226,11 +226,11 @@ const isTextField = element => {
 
     if (cats.classList.contains('ea-hidden')){
         cats.classList.remove('ea-hidden');
-        element.innerHTML = "Menos categorias...";
+        element.innerHTML = "Menos...";
     }
     else {
         cats.classList.add('ea-hidden');
-        element.innerHTML = "Mais categorias...";
+        element.innerHTML = "Mais...";
     }
 
  }
