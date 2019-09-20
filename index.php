@@ -190,15 +190,12 @@
                     <input class="ea-field" type="hidden" name="budgetSubCategory.id" value="79">
                 </div>
             </div>
-        </div>
-        <div class="<?php echo $css_button_group ?>">
-            <div class="<?php echo $css_prev_button ?>">
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
                 <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-            </div>
-            <div class="<?php echo $css_next_button ?>">
                 <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
+
         </div>
     <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
         <div class="<?php echo $css_row ?>">
@@ -227,13 +224,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="<?php echo $css_button_group ?>">
-            <div class="<?php echo $css_prev_button ?>">
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
                 <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-            </div>
-            <div class="<?php echo $css_next_button ?>">
                 <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
@@ -268,15 +260,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="<?php echo $css_button_group ?>">
-            <div class="<?php echo $css_prev_button ?>">
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
                 <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-            </div>
-            <div class="<?php echo $css_next_button ?>">
                 <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
+
     </div>
     <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
         <div class="<?php echo $css_row ?>">
@@ -296,14 +285,9 @@
                     </div>
 <!--                </div>-->
             </div>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
-                </div>
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
     </div>
@@ -351,14 +335,9 @@
 
                 </div>
             </div>
-
-            <div class="<?php echo $css_button_group ?>">
-                <div class="<?php echo $css_prev_button ?>">
-                    <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                </div>
-                <div class="<?php echo $css_next_button ?>">
-                    <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
-                </div>
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
+                <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
             </div>
         </div>
     </div>
@@ -416,17 +395,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="<?php echo $css_button_group ?>">
-            <div class="<?php echo $css_prev_button ?>">
+            <div class="ea-step-footer <?php echo $css_full_col ?>">
                 <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-            </div>
-            <div class="<?php echo $css_next_button ?>">
                 <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
-                <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro">
             </div>
         </div>
+        <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro">
     </div>
     <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
         <div class="<?php echo $css_row ?>">

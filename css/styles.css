@@ -6,7 +6,7 @@
     display: block;
 }
 .ea-hidden {
-    display: none;
+    display: none !important;
 }
 
 .ea-step-title {
