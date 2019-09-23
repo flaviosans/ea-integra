@@ -6,34 +6,10 @@
   <meta name="description" content="Protótipo - Formulário de Orçamento">
   <meta name="author" content="Entenda Antes!">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+  <link rel="stylesheet" href="css/mini-default.min.css">
 </head>
 
 <body>
-
-
-<style>
-    .ea-field[type="radio"] {
-        display: none;
-    }
-    .ea-field[type="radio"]:checked+label {
-        background-color: #FF7700;
-    }
-    .ea-full-width-item {
-        width: 80%;
-    }
-
-    input.ea-field, textarea.ea-field {
-        width: 100%;
-        align-content: center;
-    }
-
-    .ea-form {
-        max-width: 780px;
-        align-content: center;
-    }
-
-</style>
 
 <?php 
   $unique_id = 'n555';
@@ -45,10 +21,11 @@
   // Elemento que vai conter o grid
   $css_row = "row";
   // Botão padrão
-  $css_default_button = "button primary";
+  $css_default_button = "button";
   $css_primary_button = "button primary";
+  $css_secondary_button = "button secondary";
   // Botão 'anterior'
-  $css_prev_button = $css_primary_button;
+  $css_prev_button = $css_default_button;
   // Botão 'próximo'
   $css_next_button = $css_primary_button;
   // Para coluna de linha inteira
@@ -56,11 +33,12 @@
   $css_half_col = "col-md-6 col-sm-6";
   $css_third_col = "col-md-4 col-sm-4";
   $css_sixth_col = "col-md-2 col-sm-2";
+  $css_offset_button = "col-sm-4 col-sm-offset-8";
   // Div do Input do formulário
   $css_form_group = "form-group";
   $css_button_group = $css_form_group;
   $css_checkbox = "button primary";
-  $css_radio = "button primary ea-full-width-item";
+  $css_radio = "button ea-full-width-item";
   $css_radio_grid = "col-sm-12 col-md-6";
   $css_form_control = "form-control";
 
@@ -73,9 +51,8 @@
                 <div class="<?php echo $css_row ?>">
                     <div class="ea-step-title <?php echo $css_full_col ?>">
                         <h2>Onde será feito o trabalho?</h2>
-                        <span class="ea-warning">Confira os campos que estão faltando</span>
+                        <span class="ea-warning">Alguns campos precisam ser preenchidos</span>
                     </div>
-
                     <div class="ea-step-content <?php echo $css_full_col ?>">
                         <div class="<?php echo $css_row ?>">
                             <input type="hidden" name="meta.refererId" value="<?php echo $referer_id ?>">
@@ -124,8 +101,12 @@
                     </div>
 
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -134,7 +115,7 @@
                 <div class="<?php echo $css_row ?>">
                     <div class="ea-step-title <?php echo $css_full_col ?>">
                         <h2>O orçamento que você deseja se encaixa em qual categoria?</h2>
-                        <div class="ea-warning">Escolha ao menos uma categoria</div>
+                        <span class="ea-warning">Escolha ao menos uma categoria</span>
                     </div>
                     <div class="ea-step-content <?php echo $css_full_col ?>">
                         <div class="<?php echo $css_row ?>">
@@ -196,8 +177,12 @@
                         </div>
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -230,8 +215,12 @@
                         </div>
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -266,8 +255,12 @@
                         </div>
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -291,8 +284,12 @@
                         <!--                </div>-->
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -327,12 +324,12 @@
                     </div>
                     <div class="step-content <?php echo $css_full_col ?>">
                         <div class="<?php echo $css_row ?>">
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_half_col ?>">
                                 <input id="ptype1<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pf">
                                 <label for="ptype1<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Física
                                 </label>
                             </div>
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_half_col ?>">
                                 <input id="ptype2<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.person_type" value="pj">
                                 <label for="ptype2<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Pessoa Jurídica
                                 </label>
@@ -341,8 +338,12 @@
                         </div>
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -401,8 +402,12 @@
                         </div>
                     </div>
                     <div class="ea-step-footer <?php echo $css_full_col ?>">
-                        <a class="<?php echo $css_prev_button ?>" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
-                        <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                        <div class="<?php echo $css_row ?>">
+                            <div class="<?php echo $css_offset_button ?>">
+                                <a class="" onclick="prev('step<?php echo $unique_id ?>')"><?php echo $prev_message ?></a>
+                                <a class="<?php echo $css_next_button ?>" onclick="validateStep('step<?php echo $unique_id ?>')"><?php echo $next_message ?></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button class="ea-hidden ea-button ea-submit" type="submit" value="Vai cachorro">

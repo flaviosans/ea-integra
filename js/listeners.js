@@ -48,7 +48,8 @@ EaForm.prototype.showErrors = function() {
       i.focus();
       focused = true;
     }
-    i.classList.add('ea-active-warning');
+
+    i.parentElement.getElementsByTagName('label')[0].classList.add('ea-active-warning');
     i.addEventListener('click', removeErrors);
     i.addEventListener('blur', removeErrors);
   });
@@ -96,9 +97,10 @@ EaForm.prototype.validateStep = function() {
 }
 
 function removeErrors(e) {
-  e.target.style.background = '#ffffff';
+  e.target.parentElement.getElementsByTagName('label')[0].classList.remove('ea-active-warning');
+  
   Array.from(document.getElementsByClassName('ea-warning')).forEach(f => {
-    f.classList.remove('ea-active-warning');
+    f.parentElement.classList.remove('ea-active-warning');
   });
   e.target.removeEventListener('click', removeErrors);
   e.target.removeEventListener('blur', removeErrors);

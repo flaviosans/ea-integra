@@ -2,8 +2,9 @@
     display: none;
 }
 .ea-active-warning {
-    background: #ff0000;
-    display: block;
+    color: #d32f2f !important;
+    font-weight: 500;
+    display: inline;
 }
 .ea-hidden {
     display: none !important;
@@ -11,8 +12,29 @@
 
 .ea-step-title {
     height:80px;
-    margin: 20px 0 0;
+    margin: 20px 0;
 }
 .ea-step-content {
-    padding: 20px 0 0;
+    margin: 20px 0 0;
+}
+
+.ea-field[type="radio"] {
+    display: none;
+}
+.ea-field[type="radio"]:checked+label {
+    background-color: #0579ff;
+    color: #ffffff;
+}
+.ea-full-width-item {
+    width: 80%;
+}
+
+input.ea-field, textarea.ea-field {
+    width: 100%;
+    align-content: center;
+}
+
+.ea-form {
+    max-width: 780px;
+    align-content: center;
 }

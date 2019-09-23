@@ -10,7 +10,8 @@ botões, mas contém um link que
 leva ao primeiro `fieldset` para o caso de o usuário querer preencher novamente o formulário.
 O `fieldset` que contiver um `button` com a classe `ea-submit` irá enviar o formulário para a API, 
 automaticamente, além de avançar para o `fieldset` seguinte. Esse `button` já está posicionado no
-penúltimo `fieldset`, onde ele envia os dados para a API e avança para o último `fieldset`
+penúltimo `fieldset`, onde ele envia os dados para a API e avança para o último `fieldset`  
+Cada `fieldset` possui um elemento com a classe `ea-warning`, esse elemento será exibido sempre que um erro de validação ocorrer. É obrigatório.
 
 ##Funcionamento
 
