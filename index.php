@@ -61,7 +61,7 @@
   $css_button_group = $css_form_group;
   $css_checkbox = "button primary";
   $css_radio = "button primary ea-full-width-item";
-  $css_radio_grid = "col-12 col-sm-6 col-md-4";
+  $css_radio_grid = "col-sm-12 col-md-6";
   $css_form_control = "form-control";
 
   $css_container = "container";
@@ -69,7 +69,7 @@
 <div class="container">
     <div class="row">
         <form  class="ea-form col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-sm-12" action="<?php echo $api_url ?>/budget" id="ea-form<?php echo $unique_id ?>" method="POST" onsubmit="handleFormSubmit(event, this)">
-            <div class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
+            <fieldset class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
                 <div class="<?php echo $css_row ?>">
                     <div class="ea-step-title <?php echo $css_full_col ?>">
                         <h2>Onde será feito o trabalho?</h2>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-            </div>
+            </fieldset>
             <fieldset class="ea-step step<?php echo $unique_id ?> <?php echo $css_container ?>">
                 <div class="<?php echo $css_row ?>">
                     <div class="ea-step-title <?php echo $css_full_col ?>">
@@ -304,17 +304,17 @@
                     </div>
                     <div class="ea-step-content <?php echo $css_full_col ?>">
                         <div class="<?php echo $css_row ?>">
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="contm<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.contact_hour" value="morning">
                                 <label for="contm<?php echo $unique_id ?>"class="<?php echo $css_radio ?>"> Manhã
                                 </label>
                             </div>
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="conta<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.contact_hour" value="afternoon">
                                 <label for="conta<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Tarde
                                 </label>
                             </div>
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="contn<?php echo $unique_id ?>" class="ea-field" type="radio" name="questions.contact_hour" value="night">
                                 <label for="contn<?php echo $unique_id ?>" class="<?php echo $css_radio ?>"> Noite
                                 </label>
@@ -354,18 +354,18 @@
                     </div>
                     <div class="ea-step-content">
                         <div class="<?php echo $css_row ?>">
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="interest1<?php echo $unique_id ?>" class="ea-field" type="radio" name="meta.interest" value="saber_apenas_precos_a_fim_de_comparacao">
-                                <label for="interest1<?php echo $unique_id ?>" class="<?php echo $css_radio ?>">Saber apenas preços a fim de comparação
+                                <label for="interest1<?php echo $unique_id ?>" class="<?php echo $css_radio ?>">Saber apenas preços apenas a fim de comparação
                                 </label>
                             </div>
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="interest2<?php echo $unique_id ?>" class="ea-field" type="radio" name="meta.interest" value="tirar_duvidas_para_saber_melhor_o_que_desejo_fazer">
                                 <label for="interest2<?php echo $unique_id ?>" class="<?php echo $css_radio ?>">
                                     Tirar dúvidas para saber melhor o que desejo fazer
                                 </label>
                             </div>
-                            <div class="<?php echo $css_radio_grid ?>">
+                            <div class="<?php echo $css_third_col ?>">
                                 <input id="interest3<?php echo $unique_id ?>" class="ea-field" type="radio" name="meta.interest" value="negociar_a_execucao_do_servico_com_um_profissional">
                                 <label for="interest3<?php echo $unique_id ?>" class="<?php echo $css_radio ?>">
                                     Negociar a execução do serviço com um profissional
